@@ -1,0 +1,59 @@
+# Secrets / environment
+.env
+.env.*
+!.env.example
+Frontend/.env
+Frontend/.env.*
+!Frontend/.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# Dependencies
+node_modules/
+Frontend/node_modules/
+.opencode/node_modules/
+.venv/
+
+# Build outputs
+.next/
+Frontend/.next/
+dist/
+build/
+coverage/
+.turbo/
+.cache/
+
+# Logs / runtime
+*.log
+*.pid
+Frontend/.zscripts/*.pid
+
+# Local DB / generated local data
+*.db
+*.sqlite
+*.sqlite3
+Frontend/db/*.db
+
+# Archives / imported workspaces
+*.tar
+*.tar.gz
+workspace-*.tar
+
+# SpecKit source clone - not part of Meter Pulse repo
+spec-kit/
+
+# Graphify caches - keep useful Frontend reports only
+/graphify-out/
+Frontend/graphify-out/cache/
+Frontend/graphify-out/2026-*/
+Frontend/graphify-out/2026-*_*/
+Frontend/graphify-out/.graphify_analysis.json
+Frontend/graphify-out/.graphify_labels.json
+Frontend/graphify-out/.graphify_semantic_marker
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

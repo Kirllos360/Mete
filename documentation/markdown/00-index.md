@@ -10,11 +10,11 @@
 
 ```
 documentation/
-├── markdown/   ← Readable documentation (6 files)
-├── sql/        ← Database DDL scripts (1 file)
-├── text/       ← Plain text versions (8 files)
-├── excel/      ← CSV/tabular data (7 files)
-└── pdf/        ← Printable PDF versions (10 files)
+├── markdown/   ← Readable documentation (14 files)
+├── sql/        ← Database DDL scripts + validation queries (5 files)
+├── text/       ← Plain text versions (16 files)
+├── excel/      ← CSV/tabular data (13 files)
+└── pdf/        ← Printable PDF versions (18 files)
 ```
 
 ---
@@ -35,6 +35,8 @@ documentation/
 | **09** | **Git Commit Log** | `09-git-commit-log.md` | — | `09-git-commit-log.txt` | `09-git-commit-log.csv` | `09-git-commit-log.pdf` |
 | **10** | **Progress & Health Report** | `10-progress-health-report.md` | — | `10-progress-health-report.txt` | — | `10-progress-health-report.pdf` |
 | **11** | **Email Report Log** | `11-email-report-log.md` | — | `11-email-report-log.txt` | `11-email-report-log.csv` | `11-email-report-log.pdf` |
+| **12** | **T002-T003 Verification** | `12-T002-T003-verification-report.md` | — | — | — | — |
+| **13** | **Validation Reports** | `13-T001-validation-report.md`<br>`13-T002-validation-report.md`<br>`13-T003-validation-report.md`<br>`13-T004-validation-report.md` | `13-T001-validation-report.sql`<br>`13-T002-validation-report.sql`<br>`13-T003-validation-report.sql`<br>`13-T004-validation-report.sql` | `13-T001-validation-report.txt`<br>`13-T002-validation-report.txt`<br>`13-T003-validation-report.txt`<br>`13-T004-validation-report.txt` | `13-T001-validation-report.csv`<br>`13-T002-validation-report.csv`<br>`13-T003-validation-report.csv`<br>`13-T004-validation-report.csv` | `13-T001-validation-report.pdf`<br>`13-T002-validation-report.pdf`<br>`13-T003-validation-report.pdf`<br>`13-T004-validation-report.pdf` |
 
 ---
 
@@ -53,12 +55,21 @@ documentation/
 | `09-git-commit-log.md` | Full commit history with timestamps, messages, and file counts |
 | `10-progress-health-report.md` | System health check, task progress %, feedback, and recommendations |
 | `11-email-report-log.md` | Log of all email reports sent — dates, subjects, recipients |
+| `12-T002-T003-verification-report.md` | T002+T003 pre-T004 verification report |
+| `13-T001-validation-report.md` | T001 validation: NestJS scaffold checks (8 tests) |
+| `13-T002-validation-report.md` | T002 validation: config + PostgreSQL checks (7 tests) |
+| `13-T003-validation-report.md` | T003 validation: lint/format/test tooling checks (5 tests) |
+| `13-T004-validation-report.md` | T004 validation: Prisma ORM checks (8 tests) |
 
 ### `sql/` — Database Definition
 
 | File | Function |
 |------|----------|
 | `03-database-schema.sql` | Full PostgreSQL DDL: 20 tables, enums, constraints, indexes, views, triggers |
+| `13-T001-validation-report.sql` | T001 validation SQL queries |
+| `13-T002-validation-report.sql` | T002 validation SQL queries |
+| `13-T003-validation-report.sql` | T003 validation SQL queries |
+| `13-T004-validation-report.sql` | T004 validation SQL queries |
 
 ### `text/` — Plain Text (terminal, grep, scripts)
 
@@ -73,6 +84,10 @@ documentation/
 | `09-git-commit-log.txt` | Plain text commit history |
 | `10-progress-health-report.txt` | Plain text progress & health report |
 | `11-email-report-log.txt` | Plain text email log |
+| `13-T001-validation-report.txt` | T001 validation plain text |
+| `13-T002-validation-report.txt` | T002 validation plain text |
+| `13-T003-validation-report.txt` | T003 validation plain text |
+| `13-T004-validation-report.txt` | T004 validation plain text |
 | `07-github-packages-needed.txt` | Compact GitHub packages (original) |
 | `08-required-apps.txt` | All required applications (original) |
 
@@ -89,6 +104,10 @@ documentation/
 | `06-github-packages.csv` | 37 packages with categories and versions |
 | `09-git-commit-log.csv` | Commit history in tabular format |
 | `11-email-report-log.csv` | Email reports log — daily updated spreadsheet |
+| `13-T001-validation-report.csv` | T001 validation tabular |
+| `13-T002-validation-report.csv` | T002 validation tabular |
+| `13-T003-validation-report.csv` | T003 validation tabular |
+| `13-T004-validation-report.csv` | T004 validation tabular |
 
 ### `pdf/` — Printable Documents (reports, printing)
 
@@ -107,6 +126,10 @@ documentation/
 | `09-git-commit-log.pdf` | Commit history printable |
 | `10-progress-health-report.pdf` | Progress & health report printable |
 | `11-email-report-log.pdf` | Email log printable |
+| `13-T001-validation-report.pdf` | T001 validation printable |
+| `13-T002-validation-report.pdf` | T002 validation printable |
+| `13-T003-validation-report.pdf` | T003 validation printable |
+| `13-T004-validation-report.pdf` | T004 validation printable |
 
 ---
 
@@ -120,8 +143,11 @@ documentation/
 ├── markdown/03-database-schema-overview.md ← Data model reference
 ├── markdown/05-programming-languages.md  ← Tech stack
 ├── markdown/06-github-packages-needed.md ← GitHub tools
+├── markdown/13-T00*-validation-report.md ← T001-T004 validation reports
+├── markdown/12-T002-T003-verification-report.md ← Pre-T004 verification
 │
 ├── sql/03-database-schema.sql     ← PostgreSQL DDL (20 tables)
+├── sql/13-T00*-validation-report.sql ← Validation SQL queries
 │
 ├── text/                          ← Plain text versions of all above
 ├── excel/                         ← CSV/tabular data

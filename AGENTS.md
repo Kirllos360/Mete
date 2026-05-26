@@ -67,3 +67,50 @@ Every time the user sends a message, run `git status --short` to detect any chan
 - Constitution (`specify/memory/constitution.md`) is still a template placeholder — must be ratified before implementation closeout.
 - Git: no conventional commits, no CI workflows, no branch conventions documented.
 - Never commit `*.db`, `.next/`, `node_modules/`, `graphify-out/cache/`, or workspace archives.
+
+---
+
+## T009 Memory Log
+
+**Task**: T009 — Implement Auth (JWT) + RBAC guard + role model
+**Story**: Foundational — Phase 2
+**Status**: Complete
+**Date**: 2026-05-26
+**Branch**: feature/t009-auth-rbac
+**Commit**: 4290e18
+
+### What Changed
+- Created `backend/src/auth/` module with:
+  - `types/role.enum.ts` — 7 roles matching frontend UserRole type
+  - `interfaces/jwt-payload.interface.ts` — JWT payload shape (sub, userId, role, projectScope)
+  - `interfaces/request-with-user.interface.ts` — Express Request extension
+  - `constants/` — JWT config defaults
+  - `roles.decorator.ts` — @Roles() decorator using SetMetadata
+  - `jwt.strategy.ts` — Passport JWT strategy with payload validation
+  - `roles.guard.ts` — Reflector-based RBAC guard with ForbiddenException
+  - `auth.module.ts` — Module with registerAsync for JwtModule using ConfigService
+- Modified `src/main.ts` — added global ValidationPipe (whitelist, forbidNonWhitelisted, transform)
+- Modified `src/app.module.ts` — imported AuthModule
+- Modified `package.json` — added @nestjs/passport, @nestjs/jwt, passport, passport-jwt, class-validator, class-transformer, @types/passport-jwt, @types/passport
+- Modified `tsconfig.json` — added "jest" to types, removed test/ and *.spec.ts from exclude
+- Modified `.eslintrc.cjs` — added test/ to ignorePatterns
+- Modified `.env` — added JWT_SECRET, JWT_EXPIRES_IN
+- Modified `.env.example` — added placeholder JWT_SECRET, JWT_EXPIRES_IN
+- Created `test/auth/roles.guard.spec.ts` — 15 tests (8 guard + 7 role enum)
+- Created `test/auth/jwt.strategy.spec.ts` — 10 tests
+- Created `test/auth/roles.decorator.spec.ts` — 5 tests
+- Created validation reports in markdown, sql, text, csv formats
+- Updated documentation index, commit log, memory files
+- Saved prompt history to prompt-history_T009.md
+
+### Validation
+- `npm test` — 31/31 passing (3 suites)
+- `npm run build` — clean
+- `npm run lint` — clean
+
+### Frontend Role Verification
+- Verified `Frontend/src/lib/types.ts` UserRole type: super_admin, project_admin, operator, technician, finance, support, customer
+- Backend Role enum matches all 7 exactly
+
+### Next Task
+- T010

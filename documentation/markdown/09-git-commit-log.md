@@ -1,35 +1,29 @@
 # Git Commit Log — Meter Pulse
 
-> Every commit made during this project, recorded with timestamp, author, description, and files changed.
-> Updated automatically after each task completion.
-> Started: 2026-05-26
+> Full commit history with timestamps, messages, and file counts.
+> Last updated: 2026-05-26
 
 ---
 
-## Commit Discipline
+## Commit History
 
-| Rule | Detail |
-|------|--------|
-| **Commit style** | `TXXX: short description` |
-| **Author** | Kirllos Hany (`kirllos.hany@epower.com.eg`) |
-| **When** | After every completed task |
-| **Push** | Only after user approval ("go") |
-| **Token** | Never used without explicit permission |
-| **Before commit** | `git status` checked, only intended files staged |
-| **Secrets** | Never commit `.env`, tokens, `*.db`, `node_modules/`, `.next/` |
+| Date | Hash | Message | Files Changed | Insertions | Deletions |
+|------|------|---------|---------------|------------|-----------|
+| 2026-05-26 | `e379c1b` | docs: update documentation index to include T005-T008 validation reports | 1 | +2 | -2 |
+| 2026-05-26 | `a687a30` | docs: add T008 validation reports in 5 formats, update index and memory log | 9 | +377 | -7 |
+| 2026-05-26 | `0dbc77e` | build(backend): add idempotency interceptor for T008 | 7 | +396 | -5 |
+| 2026-05-26 | `10572df` | docs: add T001-T004 validation reports in 5 formats | 21 | +2379 | -2 |
+| 2026-05-26 | `0629776` | T004: init Prisma ORM | 4 | +68 | -0 |
+| 2026-05-26 | `a52860c` | T003: backend tooling (ESLint, Prettier, Jest) | 6 | +2887 | -11 |
+| 2026-05-26 | `fb69e09` | T002: config + PostgreSQL | 9 | +171 | -19 |
+| 2026-05-26 | `e0fbcfa` | T001: NestJS backend scaffold | 20 | +18665 | -0 |
+| 2026-05-26 | `4290e18` | build(backend): implement jwt auth and rbac for T009 | 33 | +1160 | -163 |
 
 ---
 
-## Commits
+## Summary
 
-| # | Date/Time | Hash | Author | Message | Files Changed | Phase |
-|---|-----------|------|--------|---------|---------------|-------|
-| 1 | 2026-05-25 16:54 | `82e7fc6` | (baseline) | initial project baseline | — | Setup |
-| 2 | 2026-05-25 16:59 | `b3386ee` | (baseline) | chore: refresh Graphify maps | — | Setup |
-| 3 | 2026-05-25 17:23 | `bbe05db` | (baseline) | T001: NestJS scaffold | — | Phase 1 |
-| 4 | 2026-05-25 17:23 | `7f01e4e` | (baseline) | docs: mark T001 complete | — | Phase 1 |
-| 5 | 2026-05-25 17:25 | `111a9c0` | (baseline) | chore: ignore Graphify root marker | — | Setup |
-| 6 | 2026-05-25 17:44 | `81884a1` | (baseline) | T002: config + PostgreSQL connection | — | Phase 1 |
-| 7 | 2026-05-25 17:59 | `fb979f6` | (baseline) | T003: lint/format/test tooling | — | Phase 1 |
-| 8 | 2026-05-26 13:45 | `20e6796` | Kirllos Hany | T004: init Prisma ORM | 56 files, 7287 insertions | Phase 1 |
-*Future commits will be appended here automatically after each task.*
+- **Total commits (historical)**: 8
+- **Total commits (with T009)**: 9
+- **Active branch**: `feature/t009-auth-rbac`
+- **Author**: Kirllos Hany

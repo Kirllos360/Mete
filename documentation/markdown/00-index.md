@@ -34,6 +34,7 @@ documentation/
 | 08 | **Required Apps** | — | — | `08-required-apps.txt` | — | `08-required-apps.pdf` |
 | **09** | **Git Commit Log** | `09-git-commit-log.md` | — | `09-git-commit-log.txt` | `09-git-commit-log.csv` | `09-git-commit-log.pdf` |
 | **14** | **MCP Server Setup** | `14-mcp-setup.md` | — | `14-mcp-setup.txt` | — | — |
+| **15** | **Task List (Notion)** | `15-task-list.md` | — | — | — | — |
 | **10** | **Progress & Health Report** | `10-progress-health-report.md` | — | `10-progress-health-report.txt` | — | `10-progress-health-report.pdf` |
 | **11** | **Email Report Log** | `11-email-report-log.md` | — | `11-email-report-log.txt` | `11-email-report-log.csv` | `11-email-report-log.pdf` |
 | **12** | **T002-T003 Verification** | `12-T002-T003-verification-report.md` | — | — | — | — |
@@ -74,7 +75,9 @@ documentation/
 | `13-T015-validation-report.md` | T015 validation: reading/tariff migration checks |
 | `13-T016-validation-report.md` | T016 validation: invoice migration checks |
 | `13-T017-validation-report.md` | T017 validation: payment/ledger migration checks |
+| `13-T018-validation-report.md` | T018 validation: AuditLog + ReportJob migration checks |
 | `14-mcp-setup.md` | Notion + Odoo MCP server setup guide with activation instructions |
+| `15-task-list.md` | Full 85-task list organized by phase, ready to paste into Notion |
 
 ### `sql/` — Database Definition
 
@@ -202,6 +205,7 @@ documentation/
 ├── markdown/06-github-packages-needed.md ← GitHub tools
 ├── markdown/13-T00*-validation-report.md ← T001-T017 validation reports
 ├── markdown/14-mcp-setup.md          ← MCP server setup guide
+├── markdown/15-task-list.md          ← Full task list (T001-T085)
 ├── markdown/12-T002-T003-verification-report.md ← Pre-T004 verification
 │
 ├── sql/03-database-schema.sql     ← PostgreSQL DDL (20 tables)

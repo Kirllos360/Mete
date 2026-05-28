@@ -184,7 +184,7 @@ A frontend task is not "started" until its `graphify query` has been run and its
   - **Validation**: `cd backend && npx prisma migrate dev --name payments_ledger && npx prisma migrate status`
   - **Risk**: Ledger must be append-only — add DB-level guard/trigger or restrict writes in repository layer.
 
-- [ ] T018 [P] Migration — AuditLog, ReportJob in `backend/prisma/`
+- [X] T018 [P] Migration — AuditLog, ReportJob in `backend/prisma/`
   - **Dependencies**: T013
   - **Area/Files**: `backend/prisma/schema.prisma`, `backend/prisma/migrations/*_audit_reports/`
   - **Acceptance**: AuditLog (before/after jsonb, correlationId) + ReportJob (status/format/filters/file_url) tables created

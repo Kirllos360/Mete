@@ -18,14 +18,16 @@ Constraints applied:
 - Priority: MVP
 - Estimate: 3 points
 - Depends on: none
+- Status: ✅ Complete (T020)
 - Scope:
   - Add centralized API client and error normalization
   - Add typed request/response helpers
   - Add auth token attach + refresh handling hooks
 - Acceptance criteria:
-  - One shared API wrapper exists and is used by at least one module
-  - Error envelope is parsed consistently
-  - Correlation IDs logged in client error handler
+  - One shared API wrapper exists and is used by at least one module → `mock-auth.ts` imports `setToken`/`clearToken`
+  - Error envelope is parsed consistently → `parseApiError()` matches T006 `ErrorEnvelope` contract
+  - Correlation IDs logged in client error handler → `[API] ${code} (${status}) correlationId=${id}`
+- Files: `src/lib/api/client.ts`, `src/lib/api/errors.ts`, `src/lib/api/auth.ts`, `src/lib/api/index.ts`
 
 ### FE-002: React Query integration pattern
 

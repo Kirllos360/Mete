@@ -200,7 +200,7 @@ A frontend task is not "started" until its `graphify query` has been run and its
 
 ### Frontend Sprint 0 foundation (Graphify-first)
 
-- [ ] T020 [US?-foundational] FE-001 API client foundation in `Frontend/src/lib/api/`
+- [X] T020 [US?-foundational] FE-001 API client foundation in `Frontend/src/lib/api/`
   - **Dependencies**: T006 (error envelope shape)
   - **Area/Files**: `Frontend/src/lib/api/client.ts`, `Frontend/src/lib/api/errors.ts`, `Frontend/src/lib/api/auth.ts`
   - **Acceptance**: One shared API wrapper (base `/api/v1`); parses `ErrorEnvelope` consistently; logs `correlationId`; auth token attach + refresh hooks; used by ≥1 module

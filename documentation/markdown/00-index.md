@@ -77,6 +77,7 @@ documentation/
 | `13-T017-validation-report.md` | T017 validation: payment/ledger migration checks |
 | `13-T018-validation-report.md` | T018 validation: AuditLog + ReportJob migration checks |
 | `13-T019-validation-report.md` | T019 validation: derived views (3 views) migration checks |
+| `13-T020-validation-report.md` | T020 validation: FE-001 API client foundation checks |
 | `14-mcp-setup.md` | Notion + Odoo MCP server setup guide with activation instructions |
 | `15-task-list.md` | Full 85-task list organized by phase, ready to paste into Notion |
 

@@ -44,11 +44,14 @@
 | 2026-05-26 | `a5532f9` | test(backend): finalize T012 contract harness | 3 | ++42 | -0 |
 | 2026-05-26 | `1912d9d` | T012: contract test harness with YAML spec loading, deref, AJV validation | 9 | ++680 | -0 |
 | 2026-05-28 | `336e0e0` | docs: mark T001-T017 as [X] completed in tasks.md | 1 | ++2 | -0 |
+| 2026-05-28 | `9f379c7` | T018: add AuditLog index + ReportJob migration | 5 | ++235 | -0 |
+| 2026-05-28 | `6936e2f` | T019: add derived views migration (3 views) | 3 | ++62 | -0 |
+| 2026-05-28 | `05b686a` | T020: add FE-001 API client foundation | 9 | ++22011 | -17939 |
 
 ---
 
 ## Summary
 
-- **Total commits**: 43
+- **Total commits**: 44
 - **Author**: Kirllos Hany
 - **Last updated**: 2026-05-28

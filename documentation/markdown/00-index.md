@@ -84,6 +84,7 @@ documentation/
 | `14-mcp-setup.md` | Notion + Odoo MCP server setup guide with activation instructions |
 | `15-task-list.md` | Full 85-task list organized by phase, ready to paste into Notion |
 | `16-checkpoint-report.md` | Full checkpoint validation (all 22 tasks verified) |
+| `17-extended-governance-rules.md` | Extended Governance Rules (Rules 1-10) for task closeout |
 
 ### `sql/` — Database Definition
 

@@ -2,7 +2,7 @@
 
 > Complete index of all documentation files organized by format type.
 > Each content piece exists in multiple formats for different use cases.
-> Last updated: 2026-05-29 (T025 — Contract Tests: simEligibility)
+> Last updated: 2026-05-29 (T026 — Contract Tests: createReading)
 
 ---
 
@@ -84,6 +84,7 @@ documentation/
 | `13-T023-validation-report.md` | T023 validation: US1 Contract tests (assignMeter) |
 | `13-T024-validation-report.md` | T024 validation: US1 Contract tests (terminateMeter) |
 | `13-T025-validation-report.md` | T025 validation: US1 Contract tests (simEligibility) |
+| `13-T026-validation-report.md` | T026 validation: US1 Contract tests (createReading) |
 | `14-mcp-setup.md` | Notion + Odoo MCP server setup guide with activation instructions |
 | `15-task-list.md` | Full 85-task list organized by phase, ready to paste into Notion |
 | `16-checkpoint-report.md` | Full checkpoint validation (all 22 tasks verified) |
@@ -117,6 +118,12 @@ documentation/
 | `deep-coverage/27-dependency-matrix.md` | T025 Deep-Coverage: Dependency Matrix |
 | `deep-coverage/28-risk-mitigation-report.md` | T025 Deep-Coverage: Risk Mitigation Report |
 | `deep-coverage/29-hidden-requirement-report.md` | T025 Deep-Coverage: Hidden Requirement Report |
+| `deep-coverage/30-task-analysis-report.md` | T026 Deep-Coverage: Task Analysis Report |
+| `deep-coverage/31-acceptance-coverage-matrix.md` | T026 Deep-Coverage: Acceptance Coverage Matrix |
+| `deep-coverage/32-file-impact-analysis.md` | T026 Deep-Coverage: File Impact Analysis |
+| `deep-coverage/33-dependency-matrix.md` | T026 Deep-Coverage: Dependency Matrix |
+| `deep-coverage/34-risk-mitigation-report.md` | T026 Deep-Coverage: Risk Mitigation Report |
+| `deep-coverage/35-hidden-requirement-report.md` | T026 Deep-Coverage: Hidden Requirement Report |
 
 ### `sql/` — Database Definition
 

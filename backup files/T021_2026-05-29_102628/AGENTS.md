@@ -275,10 +275,5 @@ Every time the user sends a message, run `git status --short` to detect any chan
 - QueryBoundary delegates empty state to existing `<EmptyState>` from `PageHelpers.tsx`
 - Mock fallback: `const data = apiData ?? mockData` — preserves existing UX when API is unavailable
 
-### Backup Created
-- Full session backup created at `backup files/T021_2026-05-29_102628/`
-- Contains: CONTINUE_HERE.md (single-file restore point), AI_HANDOFF.md, RESTORE_POINT.md, AGENTS.md, T001-T021 summary, architecture, project tree, documentation index, git log
-- Attach the entire folder to any new AI session to continue from this exact point
-
 ### Next Task
 - T022 (FE-003 Feature Flag Toggles)

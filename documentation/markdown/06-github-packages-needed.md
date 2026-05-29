@@ -124,7 +124,7 @@
 
 All installed via `Frontend/package.json`. Run `cd Frontend && bun install`.
 
-| Library | Version | Purpose | GitHub |
+| Library | Version | Purpose | GitHub / Download |
 |---|---|---|---|
 | **@tanstack/react-query** | ^5.82.0 | Server state / API data fetching hooks | https://github.com/TanStack/query |
 | **zustand** | ^5.0.6 | Lightweight client state management | https://github.com/pmndrs/zustand |
@@ -132,25 +132,45 @@ All installed via `Frontend/package.json`. Run `cd Frontend && bun install`.
 | **next-auth** | ^4.24.11 | Authentication for Next.js | https://github.com/nextauthjs/next-auth |
 | **zod** | ^4.0.2 | Schema validation (forms + API) | https://github.com/colinhacks/zod |
 | **react-hook-form** | ^7.60.0 | Performant form handling | https://github.com/react-hook-form/react-hook-form |
+| **@hookform/resolvers** | Latest | Validation schema resolvers (zod, yup, etc.) for react-hook-form | https://github.com/react-hook-form/resolvers |
 | **recharts** | ^2.15.4 | Charting & data visualization | https://github.com/recharts/recharts |
 | **framer-motion** | ^12.23.2 | Animation library | https://github.com/framer/motion |
 | **lucide-react** | ^0.525.0 | Icon library | https://github.com/lucide-icons/lucide |
 | **sonner** | ^2.0.6 | Toast notifications | https://github.com/emilkowalski/sonner |
 | **next-themes** | ^0.4.6 | Dark/light mode theme | https://github.com/pacocoursey/next-themes |
-| **@dnd-kit/core** | ^6.3.1 | Drag and drop toolkit | https://github.com/clauderic/dnd-kit |
+| **@dnd-kit** (core, sortable, utilities) | ^6.3.1 | Drag and drop toolkit | https://github.com/clauderic/dnd-kit |
 | **@tanstack/react-table** | ^8.21.3 | Table/smart-table logic | https://github.com/TanStack/table |
 | **date-fns** | ^4.1.0 | Date formatting utilities | https://github.com/date-fns/date-fns |
 | **next-intl** | ^4.3.4 | Internationalization | https://github.com/amannn/next-intl |
 | **class-variance-authority** | ^0.7.1 | Component variant management | https://github.com/joe-bell/cva |
+| **clsx** | Latest | Conditional class name construction | https://github.com/lukeed/clsx |
+| **tailwind-merge** | Latest | Merge Tailwind classes without conflicts | https://github.com/dcastil/tailwind-merge |
+| **tailwindcss-animate** | Latest | Tailwind CSS animation utilities | https://github.com/jamiebuilds/tailwindcss-animate |
+| **uuid** | Latest | UUID v4 generation | https://github.com/uuidjs/uuid |
 | **react-day-picker** | ^9.8.0 | Date picker component | https://github.com/gpbl/react-day-picker |
 | **cmdk** | ^1.1.1 | Command menu / autocomplete | https://github.com/pacocoursey/cmdk |
 | **vaul** | ^1.1.2 | Drawer component | https://github.com/emilkowalski/vaul |
 | **embla-carousel-react** | ^8.6.0 | Carousel | https://github.com/davidjerleke/embla-carousel |
 | **react-resizable-panels** | ^3.0.3 | Resizable panel layouts | https://github.com/bvaughn/react-resizable-panels |
 | **input-otp** | ^1.4.2 | OTP input component | https://github.com/guilhermerodz/input-otp |
+| **@mdxeditor/editor** | Latest | MDX-rich text editor component | https://github.com/mdxeditor/editor |
+| **@reactuses/core** | Latest | React utility hooks collection | https://github.com/reactuses/reactuses |
+| **sharp** | Latest | High-performance image processing (Next.js requirement) | https://github.com/lovell/sharp |
 | **z-ai-web-dev-sdk** | ^0.0.18 | AI web development SDK | https://github.com/z-ai/z-ai-web-dev-sdk |
 | **react-markdown** | ^10.1.0 | Markdown rendering | https://github.com/remarkjs/react-markdown |
 | **react-syntax-highlighter** | ^15.6.1 | Code syntax highlighting | https://github.com/react-syntax-highlighter/react-syntax-highlighter |
+| **@radix-ui/*** (25+ primitives) | Latest | Headless UI primitives (used by shadcn/ui) | https://github.com/radix-ui/primitives |
+
+### Frontend Dev Dependencies
+| Library | Purpose | GitHub |
+|---|---|---|
+| **@tailwindcss/postcss** | Tailwind CSS PostCSS plugin for v4 | https://github.com/tailwindlabs/tailwindcss |
+| **typescript** | ^5.x TypeScript compiler | https://github.com/microsoft/TypeScript |
+| **eslint** + **eslint-config-next** | Frontend linting | https://github.com/eslint/eslint |
+| **playwright** | ^1.60.0 E2E browser testing | https://github.com/microsoft/playwright |
+| **tailwindcss** | ^4.x CSS framework | https://github.com/tailwindlabs/tailwindcss |
+| **tw-animate-css** | Tailwind animation CSS | https://github.com/jamiebuilds/tailwindcss-animate |
+| **bun-types** | Bun runtime TypeScript types | https://github.com/oven-sh/bun |
 
 ---
 
@@ -178,14 +198,28 @@ All installed via `backend/package.json`. Run `cd backend && npm install`.
 | **swagger-ui-express** | ^5.0.1 | Swagger UI serving | https://github.com/scottie1984/swagger-ui-express |
 
 ### Dev Dependencies
-| Library | Purpose | GitHub |
-|---|---|---|
+| Library | Version | Purpose | GitHub |
+|---|---|---|---|
+| **@nestjs/cli** | ^11.0.21 | NestJS CLI (scaffolding, build) | https://github.com/nestjs/nest-cli |
+| **@nestjs/testing** | ^10.4.x | NestJS testing utilities | https://github.com/nestjs/testing |
 | **jest** | ^29.7.0 | Unit/integration tests | https://github.com/jestjs/jest |
 | **supertest** | Latest | HTTP contract testing | https://github.com/ladjs/supertest |
 | **ts-jest** | Latest | TypeScript Jest support | https://github.com/kulshekhar/ts-jest |
+| **ts-node** | Latest | TypeScript execution for Jest | https://github.com/TypeStrong/ts-node |
+| **tsconfig-paths** | Latest | TypeScript path resolution | https://github.com/dividab/tsconfig-paths |
+| **prisma** | ^6.19.3 | Prisma CLI (migrations, generate, validate) | https://github.com/prisma/prisma |
+| **eslint** + **@typescript-eslint/* + eslint-config-prettier** | Latest | Backend linting | https://github.com/eslint/eslint |
+| **prettier** | ^3.8.3 | Code formatter | https://github.com/prettier/prettier |
+| **js-yaml** | Latest | YAML parsing (contract tests read meter-pulse-api.yaml) | https://github.com/nodeca/js-yaml |
+| **ajv** + **ajv-formats** | ^8.17.x | JSON Schema validation for contract tests | https://github.com/ajv-validator/ajv |
 | **@types/jest** | Latest | Jest type definitions | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| **@types/node** | Latest | Node.js type definitions | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| **@types/express** | Latest | Express type definitions | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| **@types/passport** | Latest | Passport type definitions | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | **@types/passport-jwt** | Latest | passport-jwt types | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | **@types/supertest** | Latest | supertest types | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| **@types/pg** | Latest | PostgreSQL driver types | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| **@types/js-yaml** | Latest | js-yaml type definitions | https://github.com/DefinitelyTyped/DefinitelyTyped |
 
 ---
 
@@ -200,13 +234,21 @@ All installed via `backend/package.json`. Run `cd backend && npm install`.
 - **Connection**: `postgresql://meter_pulse:meter_pulse_dev@127.0.0.1:5432/meter_pulse?schema=sim_system`
 - **Config**: `backend/docker-compose.yml`, `backend/.env`
 
+### pg (PostgreSQL Driver)
+- **Version**: Latest
+- **Use**: Native PostgreSQL driver for Prisma connection
+- **GitHub**: https://github.com/brianc/node-postgres
+- **Install**: Via npm — included in `backend/package.json`
+- **In Project**: Prisma uses pg under the hood for PostgreSQL connection
+
 ### Prisma
-- **Version**: ^6.11.1
+- **Version**: ^6.19.3 (CLI + Client)
 - **Use**: ORM, schema management, database migrations
 - **GitHub**: https://github.com/prisma/prisma
 - **Install**: Via npm — `cd backend && npm install prisma @prisma/client`
 - **Commands**: `npx prisma validate`, `npx prisma generate`, `npx prisma migrate dev`, `npx prisma migrate deploy`
 - **Schema**: `backend/prisma/schema.prisma` (20+ models, 24+ enums, 7 migrations applied)
+- **Frontend**: `Frontend/` also has Prisma for local SQLite dev schema
 
 ### SQLite (dev only)
 - **Version**: Via Prisma
@@ -289,10 +331,17 @@ All installed via `backend/package.json`. Run `cd backend && npm install`.
 - **Check**: `docker compose ps`
 
 ### WSL (Windows Subsystem for Linux)
-- **Version**: 2 (via Docker Desktop relay)
-- **Use**: Linux environment for bash scripts (Speckit `.specify/scripts/bash/`)
-- **Install**: `wsl --install -d Ubuntu` (from PowerShell as Admin)
-- **Note**: Current WSL relay has `execvpe(/bin/bash)` issue — needs Ubuntu distro initialization
+- **Version**: 2
+- **Use**: Linux environment for bash scripts (Speckit `.specify/scripts/bash/`) and Docker Desktop relay
+- **Install**: 
+  1. Open PowerShell as Administrator
+  2. Run: `wsl --install -d Ubuntu`
+  3. Restart your computer
+  4. On first launch, create a Linux username and password
+- **Microsoft Docs**: https://learn.microsoft.com/en-us/windows/wsl/install
+- **Verify**: `wsl -l -v` (should show Ubuntu running on WSL 2)
+- **Note**: Docker Desktop uses WSL 2 as backend. Current WSL relay has `execvpe(/bin/bash)` issue — needs Ubuntu distro initialization. Without WSL, Speckit bash scripts fail.
+- **In Project**: Speckit `.specify/scripts/bash/` scripts require bash
 
 ---
 
@@ -398,51 +447,74 @@ These are connected via MCP (Model Context Protocol) servers for AI tool integra
 Install in this order for a fully functioning development environment:
 
 ```bash
-# 1. Node.js v24.15.0
+# ─── 1. Node.js v24.15.0 ─────────────────────────────────────────
 #    Download from: https://nodejs.org/download/release/v24.15.0/
+#    Or use nvm: nvm install 24.15.0
+#    Verify: node -v  (should show v24.15.0)
 
-# 2. Docker Desktop
+# ─── 2. WSL 2 (Windows only) ─────────────────────────────────────
+#    Open PowerShell as Administrator:
+wsl --install -d Ubuntu
+#    Restart PC after installation
+#    Verify: wsl -l -v
+
+# ─── 3. Docker Desktop ───────────────────────────────────────────
 #    Download from: https://docs.docker.com/desktop/install/windows-install/
+#    Verify: docker --version  (should show 29.4.2+)
 
-# 3. GitHub CLI
-#    winget install --id GitHub.cli
-#    OR: https://cli.github.com/
+# ─── 4. GitHub CLI ───────────────────────────────────────────────
+winget install --id GitHub.cli
+#    OR download from: https://cli.github.com/
+#    Then authenticate: gh auth login
+#    Verify: gh --version
 
-# 4. Bun v1.3.14
+# ─── 5. Bun v1.3.14 ──────────────────────────────────────────────
 powershell -c "irm bun.sh/install.ps1 | iex"
+#    Verify: bun --version  (should show 1.3.14)
 
-# 5. Python 3.12+ via uv
+# ─── 6. Python 3.12+ via uv ──────────────────────────────────────
 powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 uv python install 3.12
+#    Verify: uv --version && python --version
 
-# 6. Speckit
+# ─── 7. Speckit (specify CLI) ────────────────────────────────────
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git@v0.8.13
+#    Verify: specify --version  (should show v0.8.13)
 
-# 7. Graphify
+# ─── 8. Graphify ─────────────────────────────────────────────────
 uv tool install graphifyy
 graphify install --platform opencode
+#    Verify: graphify --version  (should show 0.8.18)
 
-# 8. OpenSpec
+# ─── 9. OpenSpec ─────────────────────────────────────────────────
 npm install -g @fission-ai/openspec@latest
+#    Verify: openspec --version  (should show v1.3.1)
 
-# 9. Frontend dependencies
+# ─── 10. Frontend dependencies ───────────────────────────────────
 cd Frontend && bun install
+#    This installs all 60+ npm packages listed in Section 4
 
-# 10. Backend dependencies
+# ─── 11. Backend dependencies ────────────────────────────────────
 cd backend && npm install
+#    This installs all 16 runtime + 22 dev packages listed in Section 5
 
-# 11. Playwright browser
+# ─── 12. Playwright browser (for smoke tests) ────────────────────
 cd Frontend && npx playwright install chromium
+#    Verify: npx playwright --version  (should show 1.60.0+)
 
-# 12. Start PostgreSQL
+# ─── 13. Start PostgreSQL (Docker) ───────────────────────────────
 cd backend && docker compose up -d db
+#    Verify: docker compose ps  (should show "db" as healthy)
 
-# 13. Prisma migration
+# ─── 14. Prisma migrations ──────────────────────────────────────
 cd backend && npx prisma generate && npx prisma migrate deploy
+#    Verify: npx prisma validate  (should show "Environment variables loaded" then "ready")
+#    Check schema: npx prisma studio  (opens browser GUI)
 
-# 14. Verify everything
-cd backend && npm test && npm run build
+# ─── 15. Verify everything ──────────────────────────────────────
+cd backend && npm test && npm run build && npm run lint
 cd Frontend && bun run lint --no-cache --max-warnings 0 && bun run build
+#    Expected: Backend tests 82/82 ✅, Build clean ✅, Lint clean ✅
 ```
 
 ---

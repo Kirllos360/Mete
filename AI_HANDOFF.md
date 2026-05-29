@@ -408,6 +408,23 @@ NEXT_PUBLIC_API_URL=http://localhost:3001/api/v1
 
 ---
 
+## 14. Session Checkpoint / Backup
+
+The last session checkpoint is located at:
+- **`backup files/T022_2026-05-29_112800/`**
+- Start with: `LAST_SESSION_CHECKPOINT.md` — contains full session summary, all files created/changed, validation results, and complete restore instructions
+- That folder contains ALL documentation, source code, backend config, specs, and agent configs needed to continue seamlessly
+
+To restore from scratch:
+```bash
+git clone https://github.com/Kirllos360/Meter-.git
+git checkout feature/t022-validation-docs
+cd backend && npm install && docker compose up -d db && npx prisma generate && npx prisma migrate deploy
+cd ../Frontend && bun install && bun run build
+```
+
+---
+
 ## 13. Graphify Knowledge Graph Summary
 
 - **198 code files** (structural AST), 121 docs, 18 papers, 1 image

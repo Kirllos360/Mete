@@ -77,11 +77,9 @@ jobs:
       - name: Spectral (OpenAPI Lint)
         run: npx @stoplight/spectral-cli lint "specs/001-metering-billing-platform/contracts/meter-pulse-api.yaml" --ruleset=.spectral.yaml --quiet
 
+      - uses: oven-sh/setup-bun@v2
       - name: Frontend Build
-        run: |
-          cd Frontend
-          bun install
-          bun run build
+        run: cd Frontend && bun install && bun run build
 
   dependency-scan:
     runs-on: ubuntu-latest

@@ -339,3 +339,4 @@ documentation/
 | Explore the knowledge graph | `Frontend/graphify-out/graph.html` (visual) or `graph.json` (data) |
 | Run CI/CD locally | `.github/workflows/ci.yml` — 4 jobs (backend, frontend, security, secret-scan) |
 | Build Docker images | `backend/Dockerfile` + `Frontend/Dockerfile` (multi-stage) |
+

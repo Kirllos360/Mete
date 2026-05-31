@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { usePageStore } from '@/lib/router-store';
-import { mockProjects, mockBuildings, mockUnits, mockCustomers } from '@/lib/mock-data';
+import { mockProjects, mockCustomers } from '@/lib/mock-data';
 import { PageHeader, StatCard } from '@/components/shared/PageHelpers';
 import { QueryBoundary } from '@/components/shared/QueryBoundary';
 import { StatusBadge } from '@/components/shared/StatusBadge';
@@ -13,9 +13,28 @@ import {
 } from '@/components/ui/select';
 import { Plus, ChevronDown, ChevronRight, Building2, Layers, Home } from 'lucide-react';
 import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
 import { useProjectsList } from '@/hooks/use-projects';
 import { useLocationsList } from '@/hooks/use-locations';
+import type { Location } from '@/lib/types';
+
+interface BuildingView {
+  id: string;
+  name: string;
+  floors: number;
+  units: number;
+  location: Location;
+}
+
+interface UnitView {
+  id: string;
+  floorNumber: number;
+  unitNumber: string;
+  unitType: string;
+  customerId?: string;
+  status: string;
+  electricityMeterId?: string;
+  waterMeterId?: string;
+}
 
 export default function LocationsPage() {
   const [selectedProject, setSelectedProject] = useState<string>('PRJ-001');
@@ -24,10 +43,37 @@ export default function LocationsPage() {
   const { data: apiProjects, isLoading, isError, error } = useProjectsList();
   const projects = apiProjects ?? mockProjects;
 
-  const { data: apiLocations } = useLocationsList(selectedProject);
-  // Locations API data available for future use: apiLocations ?? undefined
+  const { data: apiLocations, isLoading: locLoading } = useLocationsList(selectedProject);
 
-  const buildings = mockBuildings.filter((b) => b.projectId === selectedProject);
+  const buildings: BuildingView[] = useMemo(() => {
+    if (apiLocations) {
+      return apiLocations
+        .filter((l) => l.nodeType === 'building')
+        .map((l) => ({
+          id: l.id,
+          name: l.name,
+          floors: 0,
+          units: 0,
+          location: l
+        }));
+    }
+    return [];
+  }, [apiLocations]);
+
+  const units: UnitView[] = useMemo(() => {
+    if (apiLocations) {
+      return apiLocations
+        .filter((l) => l.nodeType === 'unit')
+        .map((l) => ({
+          id: l.id,
+          floorNumber: parseInt(l.code.replace(/\D/g, ''), 10) || 1,
+          unitNumber: l.code,
+          unitType: 'unit',
+          status: l.status
+        }));
+    }
+    return [];
+  }, [apiLocations]);
 
   return (
     <div>
@@ -62,8 +108,8 @@ export default function LocationsPage() {
       {/* Summary */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
         <StatCard label="Buildings" value={buildings.length} icon={<Building2 className="h-5 w-5" />} />
-        <StatCard label="Total Units" value={buildings.reduce((s, b) => s + b.units, 0)} icon={<Home className="h-5 w-5" />} />
-        <StatCard label="Total Floors" value={buildings.reduce((s, b) => s + b.floors, 0)} icon={<Layers className="h-5 w-5" />} />
+        <StatCard label="Total Units" value={units.length} icon={<Home className="h-5 w-5" />} />
+        <StatCard label="Total Floors" value={new Set(units.map((u) => u.floorNumber)).size} icon={<Layers className="h-5 w-5" />} />
       </div>
 
       {/* Buildings Grid */}
@@ -74,9 +120,9 @@ export default function LocationsPage() {
           </div>
         ) : (
           buildings.map((bldg) => {
-            const bUnits = mockUnits.filter((u) => u.buildingId === bldg.id);
             const isExpanded = expandedBuilding === bldg.id;
-            const floors = [...new Set(bUnits.map((u) => u.floorNumber))].sort((a, b) => a - b);
+            const bldgUnits = units.filter((u) => u.id.startsWith(bldg.id.substring(0, 8)));
+            const floors = [...new Set(bldgUnits.map((u) => u.floorNumber))].sort((a, b) => a - b);
 
             return (
               <Card key={bldg.id} className="glass-card border-border/50 overflow-hidden">
@@ -89,7 +135,7 @@ export default function LocationsPage() {
                       <Building2 className="h-5 w-5 text-primary" />
                       <div>
                         <p className="font-semibold text-sm">{bldg.name}</p>
-                        <p className="text-xs text-muted-foreground">{bldg.floors} floors · {bldg.units} units</p>
+                        <p className="text-xs text-muted-foreground">{floors.length} floors · {bldgUnits.length} units</p>
                       </div>
                     </div>
                     {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
@@ -101,35 +147,22 @@ export default function LocationsPage() {
                         <p className="text-xs text-muted-foreground text-center py-2">No units in this building</p>
                       ) : (
                         floors.map((floor) => {
-                          const floorUnits = bUnits.filter((u) => u.floorNumber === floor);
+                          const floorUnits = bldgUnits.filter((u) => u.floorNumber === floor);
                           return (
                             <div key={floor}>
                               <p className="text-xs font-medium text-muted-foreground mb-2">Floor {floor}</p>
                               <div className="space-y-1.5">
-                                {floorUnits.map((unit) => {
-                                  const customer = unit.customerId
-                                    ? mockCustomers.find((c) => c.id === unit.customerId)
-                                    : null;
-                                  return (
-                                    <div key={unit.id} className="flex items-center justify-between p-2 rounded-lg bg-muted/20 text-xs">
-                                      <div>
-                                        <span className="font-medium">{unit.unitNumber}</span>
-                                        <span className="text-muted-foreground ml-2">
-                                          {unit.unitType}
-                                        </span>
-                                        {customer && (
-                                          <span className="text-muted-foreground ml-2">· {customer.name}</span>
-                                        )}
-                                      </div>
-                                      <div className="flex items-center gap-2">
-                                        <span className="text-muted-foreground">
-                                          {unit.electricityMeterId && '⚡'} {unit.waterMeterId && '💧'}
-                                        </span>
-                                        <StatusBadge status={unit.status} />
-                                      </div>
+                                {floorUnits.map((unit) => (
+                                  <div key={unit.id} className="flex items-center justify-between p-2 rounded-lg bg-muted/20 text-xs">
+                                    <div>
+                                      <span className="font-medium">{unit.unitNumber}</span>
+                                      <span className="text-muted-foreground ml-2">{unit.unitType}</span>
                                     </div>
-                                  );
-                                })}
+                                    <div className="flex items-center gap-2">
+                                      <StatusBadge status={unit.status} />
+                                    </div>
+                                  </div>
+                                ))}
                               </div>
                             </div>
                           );

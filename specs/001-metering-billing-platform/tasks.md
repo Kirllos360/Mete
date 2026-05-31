@@ -88,7 +88,7 @@ A frontend task is not "started" until its `graphify query` has been run and its
   - **Validation**: `cd backend && docker compose up -d db && docker compose ps`
   - **Risk**: Port collision with existing local services; make port configurable via env.
 
-**Checkpoint**: Backend boots, connects to Postgres, lint/test/Prisma all run.
+**Checkpoint**: Backend boots, connects to Postgres, lint/test/Prisma all run. ? VERIFIED
 
 ---
 
@@ -221,7 +221,7 @@ A frontend task is not "started" until its `graphify query` has been run and its
   - **Validation**: `cd Frontend && graphify query "feature flag mock vs api per module" && bun run lint && bun run build && bun run test:smoke`
   - **Risk**: Flag default must remain mock until a module's API is verified, to keep smoke green.
 
-**Checkpoint**: Schema migrated for all entities, cross-cutting backend infra + contract harness ready, frontend API/query/flag foundation in place and smoke-green. User stories can begin.
+**Checkpoint**: Schema migrated for all entities, cross-cutting backend infra + contract harness ready, frontend API/query/flag foundation in place and smoke-green. User stories can begin. ? VERIFIED
 
 ---
 
@@ -249,7 +249,7 @@ A frontend task is not "started" until its `graphify query` has been run and its
   - **Validation**: `cd backend && npm test -- meter-terminate.contract`
   - **Risk**: Eligibility cooldown field nullability must match contract.
 
-- [ ] T025 [P] [US1] Integration test — assignment conflict (one active per meter & per SIM) in `backend/test/integration/assignment-conflict.spec.ts`
+- [X] T025 [P] [US1] Integration test — assignment conflict (one active per meter & per SIM) in `backend/test/integration/assignment-conflict.spec.ts`
   - **Dependencies**: T014
   - **Area/Files**: `backend/test/integration/assignment-conflict.spec.ts`
   - **Acceptance**: Concurrent/duplicate assign of same meter or SIM rejected with conflict; only one active row persists (FR-004/FR-005)
@@ -379,7 +379,7 @@ A frontend task is not "started" until its `graphify query` has been run and its
   - **Validation**: `cd Frontend && bun run lint && bun run build && bun run test:smoke && graphify update .`
   - **Risk**: Smoke flakiness; rerun and stabilize before proceeding to US2.
 
-**Checkpoint**: US1 fully functional and independently testable (assignment integrity + SIM reuse + S1/S2 frontend live).
+**Checkpoint**: US1 fully functional and independently testable (assignment integrity + SIM reuse + S1/S2 frontend live). ? VERIFIED
 
 ---
 
@@ -487,7 +487,7 @@ A frontend task is not "started" until its `graphify query` has been run and its
   - **Validation**: `cd Frontend && bun run lint && bun run build && bun run test:smoke && graphify update .`
   - **Risk**: Review tab adds new smoke routes; extend `scripts/smoke-all-pages.mjs` coverage if needed.
 
-**Checkpoint**: US2 independently testable; readings + anomaly queue live.
+**Checkpoint**: US2 independently testable; readings + anomaly queue live. ? VERIFIED
 
 ---
 
@@ -659,7 +659,7 @@ A frontend task is not "started" until its `graphify query` has been run and its
   - **Validation**: `cd Frontend && bun run lint && bun run build && bun run test:smoke && graphify update .`
   - **Risk**: Billing routes increase smoke surface; confirm deterministic runs.
 
-**Checkpoint**: US3 independently testable; billing/payments/ledger live. Core MVP business outcome complete.
+**Checkpoint**: US3 independently testable; billing/payments/ledger live. Core MVP business outcome complete. ? PENDING (T055-T067 not yet implemented)
 
 ---
 
@@ -851,3 +851,7 @@ T027 Projects  T028 Locations  T029 Customers  T030 Meters  T031 SIM
 - Frontend commands use `bun` per `Frontend/FRONTEND_BUILD.md` (`lint`, `build`, `test:smoke`).
 - `meter-pulse-api.yaml` is the contract source of truth; resolve any served-spec drift in T083.
 - Constitution ratification (T085) is the final gate per plan Gate 4 — the feature is not "done" until it passes.
+
+
+
+

@@ -9,9 +9,10 @@ import { setupOpenApi } from './common/openapi/openapi.setup';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger: process.env.NODE_ENV === 'production'
-      ? ['log', 'error', 'warn']
-      : ['log', 'error', 'warn', 'debug', 'verbose']
+    logger:
+      process.env.NODE_ENV === 'production'
+        ? ['log', 'error', 'warn']
+        : ['log', 'error', 'warn', 'debug', 'verbose']
   });
 
   app.setGlobalPrefix('api/v1');

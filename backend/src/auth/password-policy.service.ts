@@ -36,7 +36,11 @@ export class PasswordPolicyService {
     return recentFailures >= this.MAX_ATTEMPTS;
   }
 
-  async recordAttempt(userId: string, ipAddress: string | undefined, success: boolean): Promise<void> {
+  async recordAttempt(
+    userId: string,
+    ipAddress: string | undefined,
+    success: boolean
+  ): Promise<void> {
     await this.prisma.loginAttempt.create({
       data: { userId, ipAddress: ipAddress ?? null, success }
     });

@@ -26,6 +26,13 @@ import { PasswordPolicyService } from './password-policy.service';
   ],
   controllers: [AuthController],
   providers: [JwtStrategy, RolesGuard, RefreshTokenService, PasswordPolicyService],
-  exports: [PassportModule, JwtModule, JwtStrategy, RolesGuard, RefreshTokenService, PasswordPolicyService]
+  exports: [
+    PassportModule,
+    JwtModule,
+    JwtStrategy,
+    RolesGuard,
+    RefreshTokenService,
+    PasswordPolicyService
+  ]
 })
 export class AuthModule {}

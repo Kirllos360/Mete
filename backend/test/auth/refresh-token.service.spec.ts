@@ -61,12 +61,16 @@ describe('RefreshTokenService', () => {
   });
 
   it('should throw on revoked token', async () => {
-    jest.spyOn(prisma.refreshToken, 'findUnique').mockResolvedValue({ ...mockRefreshToken, revokedAt: new Date() });
+    jest
+      .spyOn(prisma.refreshToken, 'findUnique')
+      .mockResolvedValue({ ...mockRefreshToken, revokedAt: new Date() });
     await expect(service.validate('revoked-token')).rejects.toThrow(UnauthorizedException);
   });
 
   it('should throw on expired token', async () => {
-    jest.spyOn(prisma.refreshToken, 'findUnique').mockResolvedValue({ ...mockRefreshToken, expiresAt: new Date(Date.now() - 1000) });
+    jest
+      .spyOn(prisma.refreshToken, 'findUnique')
+      .mockResolvedValue({ ...mockRefreshToken, expiresAt: new Date(Date.now() - 1000) });
     await expect(service.validate('expired-token')).rejects.toThrow(UnauthorizedException);
   });
 

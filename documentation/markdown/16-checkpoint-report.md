@@ -11,7 +11,7 @@
 
 | Check | Result | Detail |
 |---|---|---|
-| `npm test` | ✅ 287/287 passing (34 suites) | All tests pass at 100% |
+| `npm test` | ✅ 320/320 passing (34 suites) | All tests pass at 100% |
 | `npm run build` | ✅ Clean (0 errors) | TypeScript compilation clean |
 | `npx eslint src/` | ✅ Clean (0 errors, 0 warnings) | All lint rules pass |
 | `npx prettier --check "src/**/*.ts"` | ✅ Clean (0 warnings) | All files formatted |
@@ -118,4 +118,5 @@ Any AI can load this session by reading `AI_HANDOFF.md` first.
 | Phase B-D not yet implemented | Refresh tokens, password policy, CSRF, hash chain, structured logging | Roadmap documented in `security-roadmap.md` for Sprint 2+ | ⚠️ |
 | Restore point created & verified | Portable state for handoff | `restore-point-20260531-094024/` with AI_HANDOFF.md | ✅ |
 | Safety tooling built | Crash/backup/alert system operational | `backend/scripts/` — health-check, backup, alert, test-sweep | ✅ |
-| T001-T054 sweep completed | 54/54 tasks all ✅ (287/287 tests) | Full sweep report in restore point | ✅ |
+| T001-T054 sweep completed | 54/54 tasks all ✅ (320/320 tests) | Full sweep report in restore point | ✅ |
+

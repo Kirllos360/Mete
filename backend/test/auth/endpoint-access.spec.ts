@@ -17,10 +17,22 @@ describe('Endpoint Access Control (Functional)', () => {
 
   const endpoints = [
     { path: '/api/v1/health', method: 'get', allowedRoles: null },
-    { path: '/api/v1/meters/meter-1/assign', method: 'post', allowedRoles: [Role.OPERATOR, Role.TECHNICIAN, Role.PROJECT_ADMIN, Role.SUPER_ADMIN] },
-    { path: '/api/v1/meters/meter-1/terminate', method: 'post', allowedRoles: [Role.OPERATOR, Role.TECHNICIAN, Role.PROJECT_ADMIN, Role.SUPER_ADMIN] },
-    { path: '/api/v1/sim-cards/sim-1/eligibility', method: 'get', allowedRoles: [Role.OPERATOR, Role.TECHNICIAN, Role.PROJECT_ADMIN, Role.SUPER_ADMIN] },
-    { path: '/api/v1/payments/payment-1/reverse', method: 'post', allowedRoles: [Role.SUPER_ADMIN] },
+    {
+      path: '/api/v1/meters/meter-1/assign',
+      method: 'post',
+      allowedRoles: [Role.OPERATOR, Role.TECHNICIAN, Role.PROJECT_ADMIN, Role.SUPER_ADMIN]
+    },
+    {
+      path: '/api/v1/meters/meter-1/terminate',
+      method: 'post',
+      allowedRoles: [Role.OPERATOR, Role.TECHNICIAN, Role.PROJECT_ADMIN, Role.SUPER_ADMIN]
+    },
+    {
+      path: '/api/v1/sim-cards/sim-1/eligibility',
+      method: 'get',
+      allowedRoles: [Role.OPERATOR, Role.TECHNICIAN, Role.PROJECT_ADMIN, Role.SUPER_ADMIN]
+    },
+    { path: '/api/v1/payments/payment-1/reverse', method: 'post', allowedRoles: [Role.SUPER_ADMIN] }
   ];
 
   beforeAll(async () => {

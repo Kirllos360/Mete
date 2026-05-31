@@ -430,7 +430,7 @@ A frontend task is not "started" until its `graphify query` has been run and its
   - **Validation**: `cd backend && npm test -- readings.contract reading-validation`
   - **Risk**: Out-of-order readings break previous-value lookup; order by `reading_at`.
 
-- [ ] T047a [US2] Automatic polling ingestion adapter (scheduler + retry + idempotency, behind feature toggle) in `backend/src/readings/polling/`
+- [X] T047a [US2] Automatic polling ingestion adapter (scheduler + retry + idempotency, behind feature toggle) in `backend/src/readings/polling/`
   - **Dependencies**: T047, T008
   - **Area/Files**: `backend/src/readings/polling/poller.service.ts`, `backend/src/readings/polling/adapter.interface.ts`, `backend/src/readings/polling/polling.scheduler.ts`
   - **Acceptance**: Pluggable adapter interface fetches device readings on a schedule, normalizes into `POST /readings` (source=automatic) with idempotency keys + retry/backoff; entire poller gated by a feature toggle (research Decision 6; plan Risks); disabled by default
@@ -445,7 +445,7 @@ A frontend task is not "started" until its `graphify query` has been run and its
   - **Risk**: Only `valid`/approved-`corrected` readings billable; enforce before billing in US3.
   - **Note**: Approve/reject/correct actions not yet implemented (pending T048a).
 
-- [ ] T048a [US2] Water main-vs-sub variance service + `GET /api/v1/projects/{projectId}/water-balance` in `backend/src/readings/water-balance/`
+- [X] T048a [US2] Water main-vs-sub variance service + `GET /api/v1/projects/{projectId}/water-balance` in `backend/src/readings/water-balance/`
   - **Dependencies**: T047, T030 (parent_main_meter_id linkage)
   - **Area/Files**: `backend/src/readings/water-balance/water-balance.service.ts`, `water-balance.controller.ts`
   - **Acceptance**: Computes variance = main-meter consumption − Σ(child-meter consumption) per period for operational review; returns variance + per-child breakdown (FR-009 comparison/variance)
@@ -851,6 +851,8 @@ T027 Projects  T028 Locations  T029 Customers  T030 Meters  T031 SIM
 - Frontend commands use `bun` per `Frontend/FRONTEND_BUILD.md` (`lint`, `build`, `test:smoke`).
 - `meter-pulse-api.yaml` is the contract source of truth; resolve any served-spec drift in T083.
 - Constitution ratification (T085) is the final gate per plan Gate 4 — the feature is not "done" until it passes.
+
+
 
 
 

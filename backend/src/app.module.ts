@@ -16,6 +16,7 @@ import { LocationsModule } from './projects/locations/locations.module';
 import { CustomersModule } from './customers/customers.module';
 import { DashboardModule } from './projects/dashboard/dashboard.module';
 import { ReadingsModule } from './readings/readings.module';
+import { WaterBalanceModule } from './readings/water-balance/water-balance.module';
 import { BillingModule } from './billing/billing.module';
 import { CorrelationMiddleware } from './common/http/correlation.middleware';
 
@@ -34,6 +35,7 @@ import { CorrelationMiddleware } from './common/http/correlation.middleware';
     CustomersModule,
     DashboardModule,
     ReadingsModule,
+    WaterBalanceModule,
     BillingModule
   ],
   controllers: [AppController],

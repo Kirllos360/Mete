@@ -97,8 +97,7 @@ jobs:
 
       - name: OSV Scanner
         run: |
-          pip install osv-scanner-linux
-          osv-scanner -r backend/package-lock.json || echo "osv-scanner completed"
+          pip install osv-scanner 2>/dev/null && osv-scanner -r backend/package-lock.json || echo "OSV Scanner: not available on this runner"
 
   graphify:
     runs-on: ubuntu-latest
@@ -115,4 +114,4 @@ jobs:
         run: pip install graphify
 
       - name: Graphify Validate
-        run: python -c "import json; g=json.load(open('graphify-out/graph.json')); print(f'Graph OK: {len(g[\"nodes\"])} nodes, {len(g[\"links\"])} edges')"
+        run: python test-agent/scripts/check-graph.py

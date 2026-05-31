@@ -70,3 +70,6 @@ Frontend/graphify-out/.graphify_analysis.json
 Frontend/graphify-out/.graphify_labels.json
 Frontend/graphify-out/.graphify_semantic_marker
 Frontend/graphify-out/.graphify_root
+
+# Restore points (large backup files)
+restore-point-*/

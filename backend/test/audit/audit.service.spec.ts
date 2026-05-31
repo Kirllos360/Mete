@@ -7,7 +7,8 @@ describe('AuditService', () => {
   let prisma: jest.Mocked<PrismaService>;
 
   const mockAuditLog = {
-    create: jest.fn()
+    create: jest.fn(),
+    findFirst: jest.fn().mockResolvedValue(null)
   };
 
   beforeEach(async () => {
@@ -38,19 +39,22 @@ describe('AuditService', () => {
         correlationId: 'corr-123'
       });
 
-      expect(mockAuditLog.create).toHaveBeenCalledWith({
-        data: {
-          actorId: 'user-1',
-          actorRole: 'operator',
-          action: 'UPDATE',
-          resourceType: 'meter',
-          resourceId: 'meter-1',
-          beforeState: { status: 'active' },
-          afterState: { status: 'inactive' },
-          reason: null,
-          correlationId: 'corr-123'
-        }
-      });
+      expect(mockAuditLog.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            actorId: 'user-1',
+            actorRole: 'operator',
+            action: 'UPDATE',
+            resourceType: 'meter',
+            resourceId: 'meter-1',
+            beforeState: { status: 'active' },
+            afterState: { status: 'inactive' },
+            reason: null,
+            correlationId: 'corr-123',
+            hash: expect.any(String)
+          })
+        })
+      );
     });
 
     it('should create an audit entry with minimal fields', async () => {
@@ -64,19 +68,22 @@ describe('AuditService', () => {
         resourceId: 'user-5'
       });
 
-      expect(mockAuditLog.create).toHaveBeenCalledWith({
-        data: {
-          actorId: 'system',
-          actorRole: 'super_admin',
-          action: 'DELETE',
-          resourceType: 'user',
-          resourceId: 'user-5',
-          beforeState: undefined,
-          afterState: undefined,
-          reason: null,
-          correlationId: null
-        }
-      });
+      expect(mockAuditLog.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            actorId: 'system',
+            actorRole: 'super_admin',
+            action: 'DELETE',
+            resourceType: 'user',
+            resourceId: 'user-5',
+            beforeState: undefined,
+            afterState: undefined,
+            reason: null,
+            correlationId: null,
+            hash: expect.any(String)
+          })
+        })
+      );
     });
 
     it('should not throw when Prisma write fails (fail-safe)', async () => {

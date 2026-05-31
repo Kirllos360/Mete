@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/husky.sh"
+
+echo '=== PRE-COMMIT HOOKS ==='
+echo 'Running eslint...'
+cd backend && npx eslint src/ --max-warnings=0 || exit 1
+echo 'Running tests...'
+npm test -- --bail --silent 2>/dev/null || exit 1
+cd ..
+echo 'Running prettier check...'
+npx prettier --check "backend/src/**/*.ts" "backend/test/**/*.ts" 2>/dev/null
+echo 'All pre-commit checks passed!'

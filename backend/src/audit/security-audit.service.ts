@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../common/database/prisma.service';
 import { Prisma } from '@prisma/client';
+import * as crypto from 'crypto';
 
 export interface SecurityAuditEntry {
   eventType: string;
@@ -24,6 +25,9 @@ export class SecurityAuditService {
 
   async log(entry: SecurityAuditEntry): Promise<void> {
     try {
+      const content = `${entry.actorId ?? 'SYSTEM'}|SECURITY_${entry.eventType}|${entry.resourceType ?? 'security'}|${entry.resourceId ?? 'N/A'}|${entry.correlationId ?? ''}|`;
+      const hash = crypto.createHash('sha256').update(content).digest('hex');
+
       await this.prisma.auditLog.create({
         data: {
           actorId: entry.actorId ?? 'SYSTEM',
@@ -31,6 +35,7 @@ export class SecurityAuditService {
           action: `SECURITY_${entry.eventType}`,
           resourceType: entry.resourceType ?? 'security',
           resourceId: entry.resourceId ?? 'N/A',
+          hash,
           beforeState: null as unknown as Prisma.InputJsonValue | undefined,
           afterState: {
             outcome: entry.outcome,

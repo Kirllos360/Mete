@@ -614,6 +614,7 @@ model AuditLog {
   afterState     Json?    @map("after_state")
   reason         String?  @map("reason")
   correlationId  String?  @map("correlation_id")
+  hash           String   @default("") @map("hash")
   createdAt      DateTime @default(now()) @map("created_at")
 
   @@map("audit_log")
@@ -636,4 +637,30 @@ model ReportJob {
 
   @@map("report_jobs")
   @@schema("sim_system")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid()) @map("id")
+  token     String   @unique @map("token")
+  userId    String   @map("user_id")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  revokedAt DateTime? @map("revoked_at")
+
+  @@map("refresh_tokens")
+  @@schema("sim_system")
+  @@index([userId])
+  @@index([token])
+}
+
+model LoginAttempt {
+  id        String   @id @default(uuid()) @map("id")
+  userId    String   @map("user_id")
+  ipAddress String?  @map("ip_address")
+  success   Boolean  @map("success")
+  attemptedAt DateTime @default(now()) @map("attempted_at")
+
+  @@map("login_attempts")
+  @@schema("sim_system")
+  @@index([userId, attemptedAt])
 }

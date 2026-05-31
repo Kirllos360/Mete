@@ -7,19 +7,16 @@ describe('AuditService', () => {
   let prisma: jest.Mocked<PrismaService>;
 
   const mockAuditLog = {
-    create: jest.fn(),
+    create: jest.fn()
   };
 
   beforeEach(async () => {
     prisma = {
-      auditLog: mockAuditLog,
+      auditLog: mockAuditLog
     } as unknown as jest.Mocked<PrismaService>;
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        AuditService,
-        { provide: PrismaService, useValue: prisma },
-      ],
+      providers: [AuditService, { provide: PrismaService, useValue: prisma }]
     }).compile();
 
     service = module.get<AuditService>(AuditService);
@@ -38,7 +35,7 @@ describe('AuditService', () => {
         resourceId: 'meter-1',
         beforeState: { status: 'active' },
         afterState: { status: 'inactive' },
-        correlationId: 'corr-123',
+        correlationId: 'corr-123'
       });
 
       expect(mockAuditLog.create).toHaveBeenCalledWith({
@@ -51,8 +48,8 @@ describe('AuditService', () => {
           beforeState: { status: 'active' },
           afterState: { status: 'inactive' },
           reason: null,
-          correlationId: 'corr-123',
-        },
+          correlationId: 'corr-123'
+        }
       });
     });
 
@@ -64,7 +61,7 @@ describe('AuditService', () => {
         actorRole: 'super_admin',
         action: 'DELETE',
         resourceType: 'user',
-        resourceId: 'user-5',
+        resourceId: 'user-5'
       });
 
       expect(mockAuditLog.create).toHaveBeenCalledWith({
@@ -77,8 +74,8 @@ describe('AuditService', () => {
           beforeState: undefined,
           afterState: undefined,
           reason: null,
-          correlationId: null,
-        },
+          correlationId: null
+        }
       });
     });
 
@@ -91,8 +88,8 @@ describe('AuditService', () => {
           actorRole: 'operator',
           action: 'UPDATE',
           resourceType: 'meter',
-          resourceId: 'meter-1',
-        }),
+          resourceId: 'meter-1'
+        })
       ).resolves.toBeUndefined();
     });
 
@@ -105,15 +102,15 @@ describe('AuditService', () => {
         action: 'ADJUST',
         resourceType: 'invoice',
         resourceId: 'inv-123',
-        reason: 'Customer dispute resolved',
+        reason: 'Customer dispute resolved'
       });
 
       expect(mockAuditLog.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
-            reason: 'Customer dispute resolved',
-          }),
-        }),
+            reason: 'Customer dispute resolved'
+          })
+        })
       );
     });
   });

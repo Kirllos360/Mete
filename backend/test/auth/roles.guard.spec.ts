@@ -13,7 +13,7 @@ describe('RolesGuard', () => {
       getAllAndOverride: jest.fn(),
       getAllAndMerge: jest.fn(),
       get: jest.fn(),
-      getAll: jest.fn(),
+      getAll: jest.fn()
     } as unknown as jest.Mocked<Reflector>;
 
     guard = new RolesGuard(reflector);
@@ -22,10 +22,10 @@ describe('RolesGuard', () => {
   const mockContext = (user?: { role: string }): ExecutionContext =>
     ({
       switchToHttp: () => ({
-        getRequest: () => ({ user }),
+        getRequest: () => ({ user })
       }),
       getHandler: () => ({}),
-      getClass: () => ({}),
+      getClass: () => ({})
     }) as unknown as ExecutionContext;
 
   describe('when no roles are required', () => {
@@ -131,7 +131,7 @@ describe('RolesGuard', () => {
         'project_admin',
         'super_admin',
         'support',
-        'technician',
+        'technician'
       ]);
     });
   });

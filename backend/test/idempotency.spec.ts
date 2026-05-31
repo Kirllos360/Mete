@@ -8,7 +8,7 @@ describe('IdempotencyService', () => {
 
   beforeEach(async () => {
     module = await Test.createTestingModule({
-      providers: [IdempotencyService],
+      providers: [IdempotencyService]
     }).compile();
     service = module.get<IdempotencyService>(IdempotencyService);
   });

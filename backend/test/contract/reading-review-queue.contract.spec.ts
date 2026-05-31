@@ -6,20 +6,26 @@ import {
   getResponseSchema,
   validateResponseBody,
   validateStatus,
-  getExpectedStatuses,
+  getExpectedStatuses
 } from './setup';
+import { PrismaService } from '../../src/common/database/prisma.service';
 
 jest.setTimeout(30000);
 
 describe('GET /readings/review-queue (listReadingReviewQueue)', () => {
   let app: NestExpressApplication;
   let request: any;
+  let authHeader: string;
   const operationId = 'listReadingReviewQueue';
 
   beforeAll(async () => {
     const testApp = await createTestApp();
     app = testApp.app;
     request = testApp.request;
+    authHeader = testApp.authHeader;
+
+    const prisma: any = app.get(PrismaService);
+    prisma.reading.findMany.mockResolvedValue([]);
   });
 
   afterAll(async () => {
@@ -61,9 +67,21 @@ describe('GET /readings/review-queue (listReadingReviewQueue)', () => {
       expect(schema).not.toBeNull();
       const sample = {
         items: [
-          { id: '00000000-0000-0000-0000-000000000001', meterId: '00000000-0000-0000-0000-000000000002', status: 'suspicious', consumptionValue: null, projectThresholdProfile: null },
-          { id: '00000000-0000-0000-0000-000000000003', meterId: '00000000-0000-0000-0000-000000000004', status: 'pending_review', consumptionValue: 500.25, projectThresholdProfile: 'default' },
-        ],
+          {
+            id: '00000000-0000-0000-0000-000000000001',
+            meterId: '00000000-0000-0000-0000-000000000002',
+            status: 'suspicious',
+            consumptionValue: null,
+            projectThresholdProfile: null
+          },
+          {
+            id: '00000000-0000-0000-0000-000000000003',
+            meterId: '00000000-0000-0000-0000-000000000004',
+            status: 'pending_review',
+            consumptionValue: 500.25,
+            projectThresholdProfile: 'default'
+          }
+        ]
       };
       const result = validateResponseBody(schema!, sample);
       expect(result.valid).toBe(true);
@@ -77,9 +95,11 @@ describe('GET /readings/review-queue (listReadingReviewQueue)', () => {
     });
   });
 
-  describe('HTTP endpoint (TDD — expected to fail)', () => {
+  describe('HTTP endpoint', () => {
     it('should return a valid status code', async () => {
-      const res = await request.get('/api/v1/readings/review-queue');
+      const res = await request
+        .get('/api/v1/readings/review-queue')
+        .set('Authorization', authHeader);
       expect(validateStatus(operationId, res.status)).toBe(true);
     });
   });

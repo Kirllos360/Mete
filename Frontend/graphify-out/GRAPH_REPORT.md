@@ -1,16 +1,16 @@
-# Graph Report - Frontend  (2026-05-29)
+# Graph Report - Frontend  (2026-05-30)
 
 ## Corpus Check
-- 128 files · ~52,068 words
+- 138 files · ~53,708 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1039 nodes · 2770 edges · 64 communities (54 shown, 10 thin omitted)
+- 1080 nodes · 2905 edges · 66 communities (57 shown, 9 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.83)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8db1f3af`
+- Built from commit: `bb0096ee`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -37,6 +37,7 @@
 - [[_COMMUNITY_Community 19|Community 19]]
 - [[_COMMUNITY_Community 20|Community 20]]
 - [[_COMMUNITY_Community 21|Community 21]]
+- [[_COMMUNITY_Community 22|Community 22]]
 - [[_COMMUNITY_Community 23|Community 23]]
 - [[_COMMUNITY_Community 24|Community 24]]
 - [[_COMMUNITY_Community 25|Community 25]]
@@ -70,6 +71,7 @@
 - [[_COMMUNITY_Community 57|Community 57]]
 - [[_COMMUNITY_Community 58|Community 58]]
 - [[_COMMUNITY_Community 59|Community 59]]
+- [[_COMMUNITY_Community 61|Community 61]]
 - [[_COMMUNITY_Community 62|Community 62]]
 - [[_COMMUNITY_Community 63|Community 63]]
 - [[_COMMUNITY_Community 65|Community 65]]
@@ -98,35 +100,35 @@
 - `dev.sh script` --calls--> `wait_for_service()`  [EXTRACTED]
   /home/abady/Downloads/09/workspace-12a9edc7-18ef-424c-a245-17e0c2b89877/.zscripts/dev.sh → .zscripts/dev.sh
 
-## Communities (64 total, 10 thin omitted)
+## Communities (66 total, 9 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.13
-Nodes (69): AlertsPage(), BalancesPage(), ConsumptionPage(), highConsumption, missingReadings, zeroConsumption, InvoiceDetailPage(), PaymentsPage() (+61 more)
+Cohesion: 0.11
+Nodes (86): AlertsPage(), BalancesPage(), ConsumptionPage(), highConsumption, missingReadings, zeroConsumption, InvoiceDetailPage(), PaymentsPage() (+78 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.03
 Nodes (67): dependencies, class-variance-authority, clsx, cmdk, date-fns, @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities (+59 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.07
-Nodes (48): AppSidebar(), AppSidebarProps, hrefToPageKey, iconMap, pageKeyToHref, SidebarContent(), SidebarContentProps, SidebarItem() (+40 more)
+Cohesion: 0.06
+Nodes (53): AppSidebarProps, hrefToPageKey, iconMap, pageKeyToHref, SidebarContent(), SidebarContentProps, SidebarItem(), SidebarItemProps (+45 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.13
-Nodes (39): InvoicesPage(), CustomersPage(), useProjectsList(), mockProjects, history, RouterState, usePageStore, MetersPage() (+31 more)
+Nodes (35): InvoicesPage(), mockProjects, MetersPage(), ProjectsPage(), ReadingsPage(), defaultStatusColorMap, SmartTable(), SmartTableColumn (+27 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.06
-Nodes (39): useIsMobile(), Separator(), Sheet(), SheetContent(), SheetDescription(), SheetFooter(), SheetHeader(), SheetOverlay() (+31 more)
+Nodes (34): useIsMobile(), Separator(), Sheet(), SheetContent(), SheetDescription(), SheetFooter(), SheetHeader(), SheetOverlay() (+26 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.06
-Nodes (57): activityColorMap, activityIconMap, ChartTooltip(), DashboardPage(), formatTime(), getAlertSummary(), getMeterStatusData(), iconMap (+49 more)
+Cohesion: 0.05
+Nodes (65): activityColorMap, activityIconMap, ChartTooltip(), DashboardPage(), formatTime(), getAlertSummary(), getMeterStatusData(), iconMap (+57 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.06
-Nodes (39): getQueryClient(), makeQueryClient(), QueryProvider(), geistMono, geistSans, metadata, Action, ActionType (+31 more)
+Cohesion: 0.08
+Nodes (30): getQueryClient(), makeQueryClient(), QueryProvider(), geistMono, geistSans, metadata, Action, ActionType (+22 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.29
@@ -180,9 +182,17 @@ Nodes (8): ChartConfig, ChartContainer(), ChartContext, ChartContextProps, Chart
 Cohesion: 0.03
 Nodes (67): dependencies, class-variance-authority, clsx, cmdk, date-fns, @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities (+59 more)
 
+### Community 20 - "Community 20"
+Cohesion: 0.22
+Nodes (5): autoOverrides, FeatureFlag, FeatureFlags, isFeatureEnabled(), loadFlags()
+
 ### Community 21 - "Community 21"
 Cohesion: 0.18
 Nodes (6): DrawerContent(), DrawerDescription(), DrawerFooter(), DrawerHeader(), DrawerOverlay(), DrawerTitle()
+
+### Community 22 - "Community 22"
+Cohesion: 0.40
+Nodes (3): InputOTP(), InputOTPGroup(), InputOTPSlot()
 
 ### Community 23 - "Community 23"
 Cohesion: 0.20
@@ -202,15 +212,15 @@ Nodes (7): dev.sh script, dev.sh script, cleanup(), log_step_end(), log_step_sta
 
 ### Community 27 - "Community 27"
 Cohesion: 0.06
-Nodes (40): cn(), AccordionContent(), AccordionItem(), AccordionTrigger(), Breadcrumb(), BreadcrumbEllipsis(), BreadcrumbItem(), BreadcrumbLink() (+32 more)
+Nodes (39): cn(), AccordionContent(), AccordionItem(), AccordionTrigger(), Breadcrumb(), BreadcrumbEllipsis(), BreadcrumbItem(), BreadcrumbLink() (+31 more)
 
 ### Community 28 - "Community 28"
 Cohesion: 0.18
 Nodes (11): devDependencies, bun-types, eslint, eslint-config-next, playwright, tailwindcss, @tailwindcss/postcss, tw-animate-css (+3 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.10
-Nodes (26): clearToken(), getAuthHeaders(), getRefreshToken(), getToken(), hasToken(), refreshToken(), setRefreshToken(), setToken() (+18 more)
+Cohesion: 0.07
+Nodes (32): clearToken(), getAuthHeaders(), getRefreshToken(), getToken(), hasToken(), refreshToken(), setRefreshToken(), setToken() (+24 more)
 
 ### Community 31 - "Community 31"
 Cohesion: 0.50
@@ -280,6 +290,10 @@ Nodes (4): FE-060: Contract and integration tests, FE-061: E2E coverage expansio
 Cohesion: 0.20
 Nodes (10): scripts, build, db:generate, db:migrate, db:push, db:reset, dev, lint (+2 more)
 
+### Community 61 - "Community 61"
+Cohesion: 0.83
+Nodes (3): HoverCard(), HoverCardContent(), HoverCardTrigger()
+
 ### Community 62 - "Community 62"
 Cohesion: 0.52
 Nodes (5): ToggleGroup(), ToggleGroupContext, ToggleGroupItem(), Toggle(), toggleVariants
@@ -293,24 +307,24 @@ Cohesion: 0.32
 Nodes (6): name, private, version, name, private, version
 
 ## Knowledge Gaps
-- **372 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+367 more)
+- **380 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+375 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **10 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 27` to `Community 0`, `Community 2`, `Community 3`, `Community 4`, `Community 5`, `Community 6`, `Community 7`, `Community 10`, `Community 12`, `Community 15`, `Community 18`, `Community 21`, `Community 23`, `Community 62`, `Community 63`, `Community 30`, `Community 31`?**
-  _High betweenness centrality (0.197) - this node is a cross-community bridge._
+- **Why does `cn()` connect `Community 27` to `Community 0`, `Community 2`, `Community 3`, `Community 4`, `Community 5`, `Community 6`, `Community 7`, `Community 10`, `Community 12`, `Community 15`, `Community 18`, `Community 21`, `Community 22`, `Community 23`, `Community 30`, `Community 31`, `Community 61`, `Community 62`, `Community 63`?**
+  _High betweenness centrality (0.205) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `Community 19` to `Community 65`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+  _High betweenness centrality (0.016) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `Community 1` to `Community 65`?**
-  _High betweenness centrality (0.014) - this node is a cross-community bridge._
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **What connects `$schema`, `style`, `rsc` to the rest of the system?**
-  _373 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _381 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.12890142831952037 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10574127906976744 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.029850746268656716 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.07355769230769231 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0639386189258312 - nodes in this community are weakly interconnected._

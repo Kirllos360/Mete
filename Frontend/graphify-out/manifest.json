@@ -140,18 +140,18 @@
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\components\\customers\\CustomerDetailPage.tsx": {
-    "mtime": 1779718058.751425,
-    "ast_hash": "3387a9ce4536ecf8684c807db4b81c65",
+    "mtime": 1780052120.108444,
+    "ast_hash": "99d19b23d3f3803ec3b5b2f6b759215f",
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\components\\customers\\CustomersPage.tsx": {
-    "mtime": 1779718058.751425,
-    "ast_hash": "f03e402c16a898ba9ee6b52f4d048d70",
+    "mtime": 1780052159.8332467,
+    "ast_hash": "c405838ed37b0976861cb9627c6894a9",
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\components\\dashboard\\DashboardPage.tsx": {
-    "mtime": 1779718058.752458,
-    "ast_hash": "b04e4d6056a060cdfd0a3d8cbdfedba6",
+    "mtime": 1780113735.2550144,
+    "ast_hash": "45df2846c92bc6654d47d74ad9767602",
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\components\\layout\\AppShell.tsx": {
@@ -200,28 +200,28 @@
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\components\\meters\\MeterDetailPage.tsx": {
-    "mtime": 1779718058.756433,
-    "ast_hash": "167eae679f8d2e22cce1284519569ca5",
+    "mtime": 1780113924.6000774,
+    "ast_hash": "b7cb48818e3eb5711fb9e00b935de78d",
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\components\\meters\\MeterReplacePage.tsx": {
-    "mtime": 1779718058.7574327,
-    "ast_hash": "188a85768efd2873c77b3f5a68dacd19",
+    "mtime": 1780114268.6346514,
+    "ast_hash": "2420b82fd88ee0dc949af6fb8060508b",
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\components\\meters\\MetersPage.tsx": {
-    "mtime": 1779718058.7574327,
-    "ast_hash": "7bc95b34efdc7800d4f333040cff2bbb",
+    "mtime": 1780113873.1881626,
+    "ast_hash": "a7fc2ac2884a32d52dbc25e3446adc8c",
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\components\\meters\\MeterTerminatePage.tsx": {
-    "mtime": 1779718058.7574327,
-    "ast_hash": "ecb8492a106c02420ee17325138b0669",
+    "mtime": 1780114150.719579,
+    "ast_hash": "d41d31a339de191ae283446e5222100e",
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\components\\projects\\LocationsPage.tsx": {
-    "mtime": 1779718058.7584326,
-    "ast_hash": "2571745355a3628723b01ae8e18f4c06",
+    "mtime": 1780051824.886616,
+    "ast_hash": "2d4622be53f238b3dc635379a8143291",
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\components\\projects\\ProjectDetailPage.tsx": {
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\components\\sim-cards\\SimCardsPage.tsx": {
-    "mtime": 1779718058.7634342,
-    "ast_hash": "ea33869586b40402302fefcd010f2b4c",
+    "mtime": 1780114354.492144,
+    "ast_hash": "f66b55dc4bfa94b7a634bfd1da373491",
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\components\\smart-table\\SmartTable.tsx": {
@@ -560,8 +560,8 @@
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\lib\\types.ts": {
-    "mtime": 1779718058.7844794,
-    "ast_hash": "d4fa749dbd107c990365c1e382c69fe9",
+    "mtime": 1780051785.7858918,
+    "ast_hash": "2fead162ee99c9911fb5c085b81048b0",
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\lib\\utils.ts": {
@@ -640,13 +640,63 @@
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\hooks\\use-projects.ts": {
-    "mtime": 1780037126.1587894,
-    "ast_hash": "f8f44dce71f481a60d6b60ce47f89b04",
+    "mtime": 1780051793.1511488,
+    "ast_hash": "d02e341b68dd18619ddfdfaa0892d926",
     "semantic_hash": ""
   },
   "D:\\meter\\Meter-\\Frontend\\src\\lib\\api\\query-client.tsx": {
     "mtime": 1780037109.8104186,
     "ast_hash": "e55c6c20b0c14b5624dd0f011fc20ce2",
+    "semantic_hash": ""
+  },
+  "D:\\meter\\Meter-\\Frontend\\src\\hooks\\use-customers.ts": {
+    "mtime": 1780051787.1630006,
+    "ast_hash": "b9463bbe016e65e50565e56623cf6898",
+    "semantic_hash": ""
+  },
+  "D:\\meter\\Meter-\\Frontend\\src\\hooks\\use-dashboard.ts": {
+    "mtime": 1780113696.1909509,
+    "ast_hash": "12aef7e2d4fb8b637b0d8149e36a6205",
+    "semantic_hash": ""
+  },
+  "D:\\meter\\Meter-\\Frontend\\src\\hooks\\use-locations.ts": {
+    "mtime": 1780051786.488829,
+    "ast_hash": "da8df1f6f5b1c7b54de488ed8e7d6e20",
+    "semantic_hash": ""
+  },
+  "D:\\meter\\Meter-\\Frontend\\src\\hooks\\use-meters.ts": {
+    "mtime": 1780113839.5719502,
+    "ast_hash": "7200e7b00df34e1fc5a0097e39b23e79",
+    "semantic_hash": ""
+  },
+  "D:\\meter\\Meter-\\Frontend\\src\\hooks\\use-replace-meter.ts": {
+    "mtime": 1780114229.0844238,
+    "ast_hash": "9452dad10b92deedee8a04998c1c0b64",
+    "semantic_hash": ""
+  },
+  "D:\\meter\\Meter-\\Frontend\\src\\hooks\\use-sim-cards.ts": {
+    "mtime": 1780113844.9387856,
+    "ast_hash": "c956a469738f4ffb2285d7cd9ee2ea97",
+    "semantic_hash": ""
+  },
+  "D:\\meter\\Meter-\\Frontend\\src\\hooks\\use-sim-eligibility.ts": {
+    "mtime": 1780114329.2931652,
+    "ast_hash": "dcb08f3a6f5c7fc2835c5a61dc68a73d",
+    "semantic_hash": ""
+  },
+  "D:\\meter\\Meter-\\Frontend\\src\\hooks\\use-terminate-meter.ts": {
+    "mtime": 1780114112.0548637,
+    "ast_hash": "104dfdd47ed3c53758d36f9e06ee2d86",
+    "semantic_hash": ""
+  },
+  "D:\\meter\\Meter-\\Frontend\\src\\lib\\feature-flags.ts": {
+    "mtime": 1780041051.5402462,
+    "ast_hash": "15134139cfeba744f118598d122277c6",
+    "semantic_hash": ""
+  },
+  "D:\\meter\\Meter-\\Frontend\\src\\pages\\api\\features.ts": {
+    "mtime": 1780040785.0059402,
+    "ast_hash": "9fb67c3055a2a36866d43cc1d07adb07",
     "semantic_hash": ""
   }
 }

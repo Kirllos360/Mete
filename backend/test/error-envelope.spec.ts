@@ -2,7 +2,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import {
   ErrorEnvelope,
   toErrorEnvelope,
-  statusFromException,
+  statusFromException
 } from '../src/common/http/error-envelope';
 
 describe('toErrorEnvelope', () => {
@@ -16,7 +16,7 @@ describe('toErrorEnvelope', () => {
       statusCode: 404,
       code: 'HttpException',
       message: 'Not Found',
-      correlationId,
+      correlationId
     });
     expect(envelope.code).toBe('HttpException');
     expect(envelope.message).toBe('Not Found');
@@ -40,7 +40,7 @@ describe('toErrorEnvelope', () => {
     expect(envelope).toMatchObject({
       code: 'InternalServerError',
       message: 'An unexpected error occurred',
-      correlationId,
+      correlationId
     });
   });
 
@@ -51,7 +51,7 @@ describe('toErrorEnvelope', () => {
     expect(envelope).toMatchObject({
       code: 'InternalServerError',
       message: 'An unexpected error occurred',
-      correlationId,
+      correlationId
     });
   });
 
@@ -62,7 +62,7 @@ describe('toErrorEnvelope', () => {
     expect(envelope).toMatchObject({
       code: 'InternalServerError',
       message: 'An unexpected error occurred',
-      correlationId,
+      correlationId
     });
   });
 
@@ -71,7 +71,14 @@ describe('toErrorEnvelope', () => {
     const envelope = toErrorEnvelope(exception, correlationId);
 
     const keys = Object.keys(envelope).sort();
-    expect(keys).toEqual(['code', 'correlationId', 'details', 'message', 'statusCode', 'timestamp']);
+    expect(keys).toEqual([
+      'code',
+      'correlationId',
+      'details',
+      'message',
+      'statusCode',
+      'timestamp'
+    ]);
   });
 
   it('code is non-empty string', () => {

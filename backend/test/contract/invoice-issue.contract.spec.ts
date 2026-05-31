@@ -5,7 +5,7 @@ import {
   getResponseSchema,
   validateResponseBody,
   validateStatus,
-  getExpectedStatuses,
+  getExpectedStatuses
 } from './setup';
 
 jest.setTimeout(30000);
@@ -13,6 +13,7 @@ jest.setTimeout(30000);
 describe('POST /invoices/{invoiceId}/issue (issueInvoice)', () => {
   let app: NestExpressApplication;
   let request: any;
+  let authHeader: string;
   const operationId = 'issueInvoice';
   const invoiceId = '00000000-0000-0000-0000-000000000001';
 
@@ -20,6 +21,7 @@ describe('POST /invoices/{invoiceId}/issue (issueInvoice)', () => {
     const testApp = await createTestApp();
     app = testApp.app;
     request = testApp.request;
+    authHeader = testApp.authHeader;
   });
 
   afterAll(async () => {
@@ -58,10 +60,10 @@ describe('POST /invoices/{invoiceId}/issue (issueInvoice)', () => {
         invoiceNumber: 'INV-001',
         utilityType: 'electricity',
         status: 'issued',
-        subtotalAmount: 100.50,
-        taxAmount: 14.50,
-        totalAmount: 115.00,
-        remainingAmount: 115.00,
+        subtotalAmount: 100.5,
+        taxAmount: 14.5,
+        totalAmount: 115.0,
+        remainingAmount: 115.0
       };
       const result = validateResponseBody(schema!, sample);
       expect(result.valid).toBe(true);
@@ -75,10 +77,10 @@ describe('POST /invoices/{invoiceId}/issue (issueInvoice)', () => {
         invoiceNumber: 'INV-002',
         utilityType: 'water',
         status: 'draft',
-        subtotalAmount: 50.00,
-        taxAmount: 5.00,
-        totalAmount: 55.00,
-        remainingAmount: 55.00,
+        subtotalAmount: 50.0,
+        taxAmount: 5.0,
+        totalAmount: 55.0,
+        remainingAmount: 55.0
       };
       const result = validateResponseBody(schema!, sample);
       expect(result.valid).toBe(true);
@@ -90,15 +92,17 @@ describe('POST /invoices/{invoiceId}/issue (issueInvoice)', () => {
       const result = validateResponseBody(schema!, {
         code: 'HIGH_RISK_INVOICE',
         message: 'Invoice requires approval before issue',
-        correlationId: 'test-correlation-id',
+        correlationId: 'test-correlation-id'
       });
       expect(result.valid).toBe(true);
     });
   });
 
-  describe('HTTP endpoint (TDD)', () => {
+  describe('HTTP endpoint', () => {
     it('should return a valid status code', async () => {
-      const res = await request.post(`/api/v1/invoices/${invoiceId}/issue`);
+      const res = await request
+        .post(`/api/v1/invoices/${invoiceId}/issue`)
+        .set('Authorization', authHeader);
       expect(validateStatus(operationId, res.status)).toBe(true);
     });
   });

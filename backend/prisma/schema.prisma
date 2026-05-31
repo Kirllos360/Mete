@@ -24,4 +24,41 @@ model AuditLog {
 
   @@map("audit_log")
   @@schema("sim_system")
+  @@index([createdAt])
+}
+
+enum ReportJobStatus {
+  pending
+  running
+  completed
+  failed
+
+  @@map("report_job_status")
+  @@schema("sim_system")
+}
+
+enum ReportFormat {
+  pdf
+  excel
+  csv
+
+  @@map("report_format")
+  @@schema("sim_system")
+}
+
+model ReportJob {
+  id            String          @id @default(uuid()) @map("id")
+  reportType    String          @map("report_type")
+  status        ReportJobStatus @default(pending) @map("status")
+  format        ReportFormat    @map("format")
+  filters       Json?           @map("filters")
+  fileUrl       String?         @map("file_url")
+  requestedBy   String          @map("requested_by")
+  errorMessage  String?         @map("error_message")
+  createdAt     DateTime        @default(now()) @map("created_at")
+  startedAt     DateTime?       @map("started_at")
+  completedAt   DateTime?       @map("completed_at")
+
+  @@map("report_jobs")
+  @@schema("sim_system")
 }

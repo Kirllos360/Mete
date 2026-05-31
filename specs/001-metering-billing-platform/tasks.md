@@ -452,35 +452,35 @@ A frontend task is not "started" until its `graphify query` has been run and its
   - **Validation**: `cd backend && npm test -- water-balance`
   - **Risk**: Missing/incomplete child readings skew variance; surface coverage % and exclude incomplete sets.
 
-- [ ] T049 [US2] FE-030 Readings API migration in `Frontend/src/components/readings/`
+- [X] T049 [US2] FE-030 Readings API migration in `Frontend/src/components/readings/`
   - **Dependencies**: T047, T022
   - **Area/Files**: `Frontend/src/components/readings/ReadingsPage.tsx`, `ReadingNewPage.tsx`
   - **Acceptance**: List/new-reading wired to API; pages intact; zero runtime errors in smoke
   - **Validation**: `cd Frontend && graphify query "readings list and new reading API migration" && bun run lint && bun run build && bun run test:smoke`
   - **Risk**: New-reading payload shape drift; validate against contract.
 
-- [ ] T050 [US2] FE-031 Reading schema + business validation in `Frontend/src/components/readings/`
+- [X] T050 [US2] FE-031 Reading schema + business validation in `Frontend/src/components/readings/`
   - **Dependencies**: T049
   - **Area/Files**: `Frontend/src/components/readings/ReadingNewPage.tsx` (+ zod schema module)
   - **Acceptance**: react-hook-form + zod schemas; duplicate + monotonic checks surfaced; backend field errors mapped inline; invalid submit prevented
   - **Validation**: `cd Frontend && graphify query "reading zod schema monotonic duplicate validation" && bun run lint && bun run build && bun run test:smoke`
   - **Risk**: Monotonicity rule must match backend or UX contradicts API.
 
-- [ ] T051 [US2] FE-032 Anomaly review queue in `Frontend/src/components/readings/`
+- [X] T051 [US2] FE-032 Anomaly review queue in `Frontend/src/components/readings/`
   - **Dependencies**: T048, T049
   - **Area/Files**: `Frontend/src/components/readings/ReadingsPage.tsx` (review tab) + new review components
   - **Acceptance**: Review queue tab with filters (type/severity/status) + approve/reject/correct updating row state + activity trail
   - **Validation**: `cd Frontend && graphify query "anomaly review queue approve reject correct" && bun run lint && bun run build && bun run test:smoke`
   - **Risk**: Stale queue after action; invalidate React Query cache on mutation.
 
-- [ ] T051a [US2] Water balance UI migration in `Frontend/src/components/billing/WaterBalancePage.tsx`
+- [X] T051a [US2] Water balance UI migration in `Frontend/src/components/billing/WaterBalancePage.tsx`
   - **Dependencies**: T048a, T022
   - **Area/Files**: `Frontend/src/components/billing/WaterBalancePage.tsx`
   - **Acceptance**: Migrate water-balance view to the variance API; show main-vs-sub variance + per-child breakdown; indicate project `water_difference_mode` (billable/report-only); no design/layout change (FR-009)
   - **Validation**: `cd Frontend && graphify query "water balance main vs sub variance UI" && bun run lint && bun run build && bun run test:smoke`
   - **Risk**: Page currently mock-driven; keep mock fallback flag until variance API verified.
 
-- [ ] T052 [US2] US2 frontend batch validation + graph refresh
+- [X] T052 [US2] US2 frontend batch validation + graph refresh
   - **Dependencies**: T049–T051, T051a
   - **Area/Files**: `Frontend/`, `Frontend/graphify-out/`
   - **Acceptance**: Lint + build + smoke green (mock + API mode); graph refreshed
@@ -851,6 +851,10 @@ T027 Projects  T028 Locations  T029 Customers  T030 Meters  T031 SIM
 - Frontend commands use `bun` per `Frontend/FRONTEND_BUILD.md` (`lint`, `build`, `test:smoke`).
 - `meter-pulse-api.yaml` is the contract source of truth; resolve any served-spec drift in T083.
 - Constitution ratification (T085) is the final gate per plan Gate 4 — the feature is not "done" until it passes.
+
+
+
+
 
 
 

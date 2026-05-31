@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { mockProjects, mockMeters, mockReadings, mockCustomers, mockUnits } from '@/lib/mock-data';
+import { useState } from 'react';
+import { mockProjects, mockMeters, mockCustomers, mockUnits } from '@/lib/mock-data';
 import { PageHeader, BackButton } from '@/components/shared/PageHelpers';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { Button } from '@/components/ui/button';
@@ -12,6 +12,15 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select';
 import { toast } from 'sonner';
+import { useCreateReading } from '@/hooks/use-readings';
+import { z } from 'zod';
+
+const readingSchema = z.object({
+  meterId: z.string().min(1, 'Meter is required'),
+  currentReading: z.string().min(1, 'Reading value is required').refine(v => !isNaN(Number(v)) && Number(v) >= 0, 'Must be a non-negative number'),
+  date: z.string().min(1, 'Date is required'),
+  source: z.string().min(1, 'Source is required'),
+});
 import { cn } from '@/lib/utils';
 import { AlertTriangle, AlertCircle, CheckCircle } from 'lucide-react';
 
@@ -49,12 +58,26 @@ export default function ReadingNewPage() {
     return w;
   }, [currentReading, lastReading, selectedMeter, consumption]);
 
-  const handleSubmit = () => {
-    if (!form.meterId || !form.currentReading) {
-      toast.error('Please fill in all required fields');
+  const createReading = useCreateReading();
+
+  const handleSubmit = async () => {
+    const parsed = readingSchema.safeParse(form);
+    if (!parsed.success) {
+      toast.error(parsed.error.errors[0]?.message ?? 'Validation failed');
       return;
     }
-    toast.success('Reading submitted successfully!');
+    try {
+      await createReading.mutateAsync({
+        meterId: form.meterId,
+        projectId: form.projectId || '',
+        readingValue: Number(form.currentReading),
+        readingAt: new Date(form.date).toISOString(),
+        source: form.source as 'manual' | 'import' | 'automatic',
+      });
+      toast.success('Reading submitted successfully!');
+    } catch {
+      toast.error('Failed to submit reading');
+    }
   };
 
   return (

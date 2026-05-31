@@ -1,18 +1,24 @@
 'use client';
 
-import { Plus, MoreHorizontal, Eye, Pencil, AlertTriangle } from 'lucide-react';
+import { useState } from 'react';
+import { Plus, MoreHorizontal, Eye, Pencil, AlertTriangle, AlertCircle, CheckCircle, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { toast } from 'sonner';
 import { usePageStore } from '@/lib/router-store';
-import { mockReadings, mockProjects } from '@/lib/mock-data';
+import { mockReadings } from '@/lib/mock-data';
 import SmartTable from '@/components/smart-table/SmartTable';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { PageHeader, formatDate, formatDateTime } from '@/components/shared/PageHelpers';
-import { cn } from '@/lib/utils';
+import { QueryBoundary } from '@/components/shared/QueryBoundary';
+import { useReadingsList } from '@/hooks/use-readings';
 
 export default function ReadingsPage() {
   const { navigate } = usePageStore();
+  const [tab, setTab] = useState<'all' | 'review'>('all');
+  const { data: apiReadings, isLoading, isError, error } = useReadingsList();
+  const readings = apiReadings ?? mockReadings;
+  const reviewQueue = readings.filter(r => r.status === 'pending_review' || r.status === 'suspicious');
 
   const columns = [
     {
@@ -69,8 +75,13 @@ export default function ReadingsPage() {
           </Button>
         }
       />
+      <div className="flex gap-2 mb-4 border-b border-border">
+        <button onClick={() => setTab('all')} className={`pb-2 px-4 text-sm font-medium border-b-2 transition-colors ${tab === 'all' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>All Readings</button>
+        <button onClick={() => setTab('review')} className={`pb-2 px-4 text-sm font-medium border-b-2 transition-colors ${tab === 'review' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'} flex items-center gap-1`}>Review Queue {reviewQueue.length > 0 && <span className="text-xs bg-destructive text-destructive-foreground rounded-full px-1.5 py-0.5">{reviewQueue.length}</span>}</button>
+      </div>
+      <QueryBoundary isLoading={isLoading} isError={isError} error={error}>
       <SmartTable
-        data={mockReadings}
+        data={tab === 'review' ? reviewQueue : readings}
         columns={columns}
         filters={[
           {
@@ -115,6 +126,7 @@ export default function ReadingsPage() {
         searchKeys={['meterSerial', 'customerName', 'unitNumber', 'enteredBy']}
         searchPlaceholder="Search readings..."
       />
+      </QueryBoundary>
     </div>
   );
 }

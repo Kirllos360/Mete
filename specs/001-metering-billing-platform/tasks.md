@@ -517,42 +517,42 @@ A frontend task is not "started" until its `graphify query` has been run and its
   - **Risk**: Adjustment type enum (credit/debit) must match.
   - **Note**: Tests pass against stub endpoints (T064 implementation pending).
 
-- [ ] T055 [P] [US3] Contract test `createPayment` + `reversePayment` (201/200 + 403) in `backend/test/contract/payments.contract.spec.ts`
+- [X] T055 [P] [US3] Contract test `createPayment` + `reversePayment` (201/200 + 403) in `backend/test/contract/payments.contract.spec.ts`
   - **Dependencies**: T012
   - **Area/Files**: `backend/test/contract/payments.contract.spec.ts`
   - **Acceptance**: Asserts `PaymentCreateRequest`/`Payment`, allocation modes, and `403 ForbiddenError` on non-super-admin reversal
   - **Validation**: `cd backend && npm test -- payments.contract`
   - **Risk**: Allocation default `oldest_due_first` must be the contract default.
 
-- [ ] T056 [P] [US3] Contract test `getCustomerStatement` in `backend/test/contract/statement.contract.spec.ts`
+- [X] T056 [P] [US3] Contract test `getCustomerStatement` in `backend/test/contract/statement.contract.spec.ts`
   - **Dependencies**: T012
   - **Area/Files**: `backend/test/contract/statement.contract.spec.ts`
   - **Acceptance**: Asserts `CustomerStatement` (opening/closing/entries with running balance)
   - **Validation**: `cd backend && npm test -- statement.contract`
   - **Risk**: Date filter semantics (inclusive bounds) must be documented.
 
-- [ ] T057 [P] [US3] Integration test — invoice immutability + adjustment flow in `backend/test/integration/invoice-immutability.spec.ts`
+- [X] T057 [P] [US3] Integration test — invoice immutability + adjustment flow in `backend/test/integration/invoice-immutability.spec.ts`
   - **Dependencies**: T016
   - **Area/Files**: `backend/test/integration/invoice-immutability.spec.ts`
   - **Acceptance**: Issued invoice rejects direct edits; corrections only via `InvoiceAdjustment` with audit (FR-011)
   - **Validation**: `cd backend && npm test -- invoice-immutability`
   - **Risk**: Any update path bypassing immutability is a financial defect.
 
-- [ ] T058 [P] [US3] Integration test — oldest-due-first allocation in `backend/test/integration/payment-allocation.spec.ts`
+- [X] T058 [P] [US3] Integration test — oldest-due-first allocation in `backend/test/integration/payment-allocation.spec.ts`
   - **Dependencies**: T017
   - **Area/Files**: `backend/test/integration/payment-allocation.spec.ts`
   - **Acceptance**: Default allocates to oldest-due invoices first; no over-allocation; sum(allocations)=payment (FR-012)
   - **Validation**: `cd backend && npm test -- payment-allocation`
   - **Risk**: Partial payments across multiple invoices must split correctly.
 
-- [ ] T059 [P] [US3] Integration test — super-admin-only reversal + audit in `backend/test/integration/payment-reversal.spec.ts`
+- [X] T059 [P] [US3] Integration test — super-admin-only reversal + audit in `backend/test/integration/payment-reversal.spec.ts`
   - **Dependencies**: T017, T009
   - **Area/Files**: `backend/test/integration/payment-reversal.spec.ts`
   - **Acceptance**: Non-super-admin → 403; super-admin reversal appends ledger entry with mandatory reason in audit (FR-013)
   - **Validation**: `cd backend && npm test -- payment-reversal`
   - **Risk**: Reversal must recompute balance, not delete prior entries.
 
-- [ ] T060 [P] [US3] Integration test — ledger running balance across charge/payment/reversal in `backend/test/integration/ledger-balance.spec.ts`
+- [X] T060 [P] [US3] Integration test — ledger running balance across charge/payment/reversal in `backend/test/integration/ledger-balance.spec.ts`
   - **Dependencies**: T017
   - **Area/Files**: `backend/test/integration/ledger-balance.spec.ts`
   - **Acceptance**: Mixed invoice_charge/payment_credit/payment_reversal/adjustment sequence yields mathematically correct running balance (FR-014, SC-004)
@@ -851,6 +851,7 @@ T027 Projects  T028 Locations  T029 Customers  T030 Meters  T031 SIM
 - Frontend commands use `bun` per `Frontend/FRONTEND_BUILD.md` (`lint`, `build`, `test:smoke`).
 - `meter-pulse-api.yaml` is the contract source of truth; resolve any served-spec drift in T083.
 - Constitution ratification (T085) is the final gate per plan Gate 4 — the feature is not "done" until it passes.
+
 
 
 

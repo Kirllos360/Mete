@@ -6,11 +6,16 @@
     "lint-staged": "lint-staged"
   },
   "devDependencies": {
-    "husky": "^9.0.0",
+    "husky": "^9.1.7",
     "lint-staged": "^15.0.0"
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["eslint --fix", "prettier --write"],
-    "*.{json,md,yaml}": ["prettier --write"]
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yaml}": [
+      "prettier --write"
+    ]
   }
 }

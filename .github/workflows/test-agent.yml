@@ -75,7 +75,7 @@ jobs:
         run: semgrep --config=.semgrep-rules.yaml --quiet --error --exclude='docs/' --exclude='backup files/' --exclude='restore-point*' --exclude='node_modules'
 
       - name: Spectral (OpenAPI Lint)
-        run: npx spectral lint "specs/001-metering-billing-platform/contracts/meter-pulse-api.yaml" --ruleset=.spectral.yaml --quiet
+        run: npx @stoplight/spectral-cli lint "specs/001-metering-billing-platform/contracts/meter-pulse-api.yaml" --ruleset=.spectral.yaml --quiet
 
       - name: Frontend Build
         run: |

@@ -13,9 +13,15 @@ interface TerminateMeterResult {
   simReusable: boolean;
 }
 
+function generateIdempotencyKey(): string {
+  return `${Date.now()}-${Math.random().toString(36).substring(2, 10)}`;
+}
+
 export function useTerminateMeter() {
   return useMutation({
     mutationFn: ({ meterId, data }: { meterId: string; data: TerminateMeterPayload }) =>
-      apiPost<TerminateMeterResult>(`/meters/${meterId}/terminate`, data),
+      apiPost<TerminateMeterResult>(`/meters/${meterId}/terminate`, data, {
+        headers: { 'Idempotency-Key': generateIdempotencyKey() }
+      }),
   });
 }

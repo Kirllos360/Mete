@@ -323,56 +323,56 @@ A frontend task is not "started" until its `graphify query` has been run and its
 
 ### Implementation for User Story 1 (frontend — Graphify-first, behind feature flag)
 
-- [ ] T035 [US1] FE-010 Projects + Locations API migration in `Frontend/src/components/projects/`
+- [X] T035 [US1] FE-010 Projects + Locations API migration in `Frontend/src/components/projects/`
   - **Dependencies**: T027, T028, T022
   - **Area/Files**: `Frontend/src/components/projects/ProjectsPage.tsx`, `ProjectDetailPage.tsx`, `LocationsPage.tsx` (+ hooks under `src/hooks/`)
   - **Acceptance**: List/detail/locations load from API with server pagination/sort/filter; no layout/design change; row-click + loading/empty/error states intact
   - **Validation**: `cd Frontend && graphify query "projects and locations API migration" && bun run lint && bun run build && bun run test:smoke`
   - **Risk**: Pagination contract mismatch; keep mock fallback flag on until verified.
 
-- [ ] T036 [US1] FE-011 Customers API migration in `Frontend/src/components/customers/`
+- [X] T036 [US1] FE-011 Customers API migration in `Frontend/src/components/customers/`
   - **Dependencies**: T029, T022
   - **Area/Files**: `Frontend/src/components/customers/CustomersPage.tsx`, `CustomerDetailPage.tsx`
   - **Acceptance**: Customer list/detail from API with page params; tabs/table/filter/search preserved
   - **Validation**: `cd Frontend && graphify query "customers list detail API migration" && bun run lint && bun run build && bun run test:smoke`
   - **Risk**: Tab state regressions; snapshot existing behavior before edit.
 
-- [ ] T037 [US1] FE-012 Dashboard KPI backend wiring in `Frontend/src/components/dashboard/`
+- [X] T037 [US1] FE-012 Dashboard KPI backend wiring in `Frontend/src/components/dashboard/`
   - **Dependencies**: T034, T022
   - **Area/Files**: `Frontend/src/components/dashboard/DashboardPage.tsx`
   - **Acceptance**: KPIs/charts from backend summaries with date-range + project scope; graceful fallback states
   - **Validation**: `cd Frontend && graphify query "dashboard KPI backend wiring" && bun run lint && bun run build && bun run test:smoke`
   - **Risk**: Chart data-shape mismatch crashes render; validate at hook boundary.
 
-- [ ] T038 [US1] FE-020 Meters + SIM cards API migration in `Frontend/src/components/meters/` and `sim-cards/`
+- [X] T038 [US1] FE-020 Meters + SIM cards API migration in `Frontend/src/components/meters/` and `sim-cards/`
   - **Dependencies**: T030, T031, T022
   - **Area/Files**: `Frontend/src/components/meters/MetersPage.tsx`, `MeterDetailPage.tsx`, `Frontend/src/components/sim-cards/SimCardsPage.tsx`
   - **Acceptance**: Lists/detail from API; client-only actions replaced with real mutations where available; views preserved; meter detail surfaces active assignment + full assignment history (FR-006)
   - **Validation**: `cd Frontend && graphify query "meters and sim cards API migration" && bun run lint && bun run build && bun run test:smoke`
   - **Risk**: Status enum mismatch between frontend types and backend; reconcile `src/lib/types.ts`.
 
-- [ ] T039 [US1] FE-021 Meter assignment workflow hardening in `Frontend/src/components/meters/MeterAssignPage.tsx`
+- [X] T039 [US1] FE-021 Meter assignment workflow hardening in `Frontend/src/components/meters/MeterAssignPage.tsx`
   - **Dependencies**: T032, T038
   - **Area/Files**: `Frontend/src/components/meters/MeterAssignPage.tsx`
   - **Acceptance**: Assign is idempotent from UI (Idempotency-Key); 409 conflict surfaces actionable validation message
   - **Validation**: `cd Frontend && graphify query "meter assign conflict idempotent UI" && bun run lint && bun run build && bun run test:smoke`
   - **Risk**: Double-submit double-assign if key not sent; enforce pending state.
 
-- [ ] T040 [US1] FE-022 Meter replacement + termination workflow in `Frontend/src/components/meters/`
+- [X] T040 [US1] FE-022 Meter replacement + termination workflow in `Frontend/src/components/meters/`
   - **Dependencies**: T033, T038
   - **Area/Files**: `Frontend/src/components/meters/MeterReplacePage.tsx`, `MeterTerminatePage.tsx`
   - **Acceptance**: Required reason/date/final-reading fields with schema validation; success/failure states; audit fields in payload
   - **Validation**: `cd Frontend && graphify query "meter replace terminate final reading form" && bun run lint && bun run build && bun run test:smoke`
   - **Risk**: Missing final reading lets termination proceed; block submit until valid.
 
-- [ ] T041 [US1] FE-023 SIM cooldown + reuse eligibility UI in `Frontend/src/components/sim-cards/SimCardsPage.tsx` (Phase 2 priority)
+- [X] T041 [US1] FE-023 SIM cooldown + reuse eligibility UI in `Frontend/src/components/sim-cards/SimCardsPage.tsx` (Phase 2 priority)
   - **Dependencies**: T031, T040
   - **Area/Files**: `Frontend/src/components/sim-cards/SimCardsPage.tsx`
   - **Acceptance**: Lifecycle badges + cooldown indicators; ineligible SIM cannot be assigned; eligibility reason visible
   - **Validation**: `cd Frontend && graphify query "sim cooldown reuse eligibility badges" && bun run lint && bun run build && bun run test:smoke`
   - **Risk**: Eligibility call latency blocks assign UX; cache eligibility per SIM.
 
-- [ ] T042 [US1] US1 frontend batch validation + graph refresh
+- [X] T042 [US1] US1 frontend batch validation + graph refresh
   - **Dependencies**: T035–T041
   - **Area/Files**: `Frontend/` (no source change), `Frontend/graphify-out/`
   - **Acceptance**: Lint + build + smoke all green in both mock and API mode; graph outputs refreshed
@@ -851,6 +851,7 @@ T027 Projects  T028 Locations  T029 Customers  T030 Meters  T031 SIM
 - Frontend commands use `bun` per `Frontend/FRONTEND_BUILD.md` (`lint`, `build`, `test:smoke`).
 - `meter-pulse-api.yaml` is the contract source of truth; resolve any served-spec drift in T083.
 - Constitution ratification (T085) is the final gate per plan Gate 4 — the feature is not "done" until it passes.
+
 
 
 

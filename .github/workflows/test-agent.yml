@@ -16,15 +16,21 @@ jobs:
           - 5432:5432
         env:
           POSTGRES_DB: meter_pulse
-          POSTGRES_USER: meter_pulse
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: meter_pulse_dev
         options: >-
-          --health-cmd pg_isready
+          --health-cmd pg_isready -U postgres
           --health-interval 5s
           --health-timeout 5s
           --health-retries 5
     env:
-      DATABASE_URL: postgresql://meter_pulse:meter_pulse_dev@localhost:5432/meter_pulse?schema=sim_system
+      DATABASE_URL: postgresql://postgres:meter_pulse_dev@localhost:5432/meter_pulse?schema=sim_system
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_NAME: meter_pulse
+      DB_SCHEMA: sim_system
+      DB_USER: postgres
+      DB_PASSWORD: meter_pulse_dev
       JWT_SECRET: ci-test-secret
     steps:
       - uses: actions/checkout@v4

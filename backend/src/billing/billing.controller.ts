@@ -1,6 +1,15 @@
 import {
-  Controller, Post, Param, Body, Get, Query, ParseUUIDPipe,
-  HttpCode, HttpStatus, UseGuards, Logger
+  Controller,
+  Post,
+  Param,
+  Body,
+  Get,
+  Query,
+  ParseUUIDPipe,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
+  Logger
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
@@ -30,7 +39,9 @@ export class BillingController {
   @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE)
   @HttpCode(HttpStatus.ACCEPTED)
   @ApiOperation({ summary: 'Generate invoices for billing period' })
-  async generateInvoices(@Body() dto: { projectId: string; billingPeriodId: string; customerIds?: string[] }) {
+  async generateInvoices(
+    @Body() dto: { projectId: string; billingPeriodId: string; customerIds?: string[] }
+  ) {
     const [period, project] = await Promise.all([
       this.prisma.billingPeriod.findUnique({ where: { id: dto.billingPeriodId } }),
       this.prisma.project.findUnique({ where: { id: dto.projectId } })
@@ -55,10 +66,14 @@ export class BillingController {
     });
 
     for (const meter of meters) {
-      const tariff = await this.tariffService.getEffectiveTariff(dto.projectId, meter.meterType, period.startDate);
+      const tariff = await this.tariffService.getEffectiveTariff(
+        dto.projectId,
+        meter.meterType,
+        period.startDate
+      );
       if (!tariff) continue;
 
-      const meterReadings = readings.filter(r => r.meterId === meter.id);
+      const meterReadings = readings.filter((r) => r.meterId === meter.id);
       const consumption = meterReadings.reduce((s, r) => s + Number(r.consumptionValue ?? 0), 0);
       if (consumption <= 0) continue;
 
@@ -97,10 +112,16 @@ export class BillingController {
         });
       }
 
-      if (utilityType === 'water' && (meter.meterType as string) === 'water_main' && waterDiffMode === 'billable') {
+      if (
+        utilityType === 'water' &&
+        (meter.meterType as string) === 'water_main' &&
+        waterDiffMode === 'billable'
+      ) {
         try {
           const balance = await this.waterBalanceService.getWaterBalance(
-            dto.projectId, period.startDate, period.endDate
+            dto.projectId,
+            period.startDate,
+            period.endDate
           );
           const variance = balance.variance;
           if (variance !== 0) {
@@ -125,7 +146,9 @@ export class BillingController {
             });
           }
         } catch {
-          this.logger.warn(`Water balance unavailable for period ${dto.billingPeriodId}, skipping variance`);
+          this.logger.warn(
+            `Water balance unavailable for period ${dto.billingPeriodId}, skipping variance`
+          );
         }
       }
 
@@ -215,7 +238,8 @@ export class BillingController {
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Record payment with oldest-due-first allocation' })
   async createPayment(
-    @Body() dto: {
+    @Body()
+    dto: {
       projectId: string;
       customerId: string;
       amount: number;
@@ -232,7 +256,10 @@ export class BillingController {
     if (allocMode === 'explicit' && dto.allocations) {
       const totalAllocated = dto.allocations.reduce((s, a) => s + Number(a.amount), 0);
       if (Math.abs(totalAllocated - amount) > 0.001) {
-        return { status: 'allocation_mismatch', message: 'Allocation total must equal payment amount' };
+        return {
+          status: 'allocation_mismatch',
+          message: 'Allocation total must equal payment amount'
+        };
       }
     }
 

@@ -2,7 +2,7 @@
 
 ## Stack
 - **Frontend** (`Frontend/`): Next.js 16 + React 19 + TypeScript + Tailwind v4 + shadcn/ui
-- **Backend** (planned, not yet created): NestJS + PostgreSQL + Prisma ORM
+- **Backend** (`backend/`): NestJS + PostgreSQL + Prisma ORM
 - **Runtime**: Bun (not npm/yarn)
 - **Auth**: next-auth v4 (frontend)
 

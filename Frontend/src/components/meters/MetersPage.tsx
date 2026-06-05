@@ -6,12 +6,16 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { toast } from 'sonner';
 import { usePageStore } from '@/lib/router-store';
 import { mockMeters, mockProjects } from '@/lib/mock-data';
+import { useMetersList } from '@/hooks/use-meters';
+import { QueryBoundary } from '@/components/shared/QueryBoundary';
 import SmartTable from '@/components/smart-table/SmartTable';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { PageHeader, formatDate } from '@/components/shared/PageHelpers';
 
 export default function MetersPage() {
   const { navigate } = usePageStore();
+  const metersQuery = useMetersList();
+  const meters = metersQuery.data ?? mockMeters;
 
   const columns = [
     {
@@ -74,8 +78,9 @@ export default function MetersPage() {
           </Button>
         }
       />
+      <QueryBoundary query={metersQuery}>
       <SmartTable
-        data={mockMeters}
+        data={meters}
         columns={columns}
         filters={[
           {
@@ -108,6 +113,7 @@ export default function MetersPage() {
         searchPlaceholder="Search meters..."
         onRowClick={(row) => navigate('meter-detail', { id: row.id })}
       />
+      </QueryBoundary>
     </div>
   );
 }

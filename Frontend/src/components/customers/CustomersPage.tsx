@@ -1,7 +1,11 @@
 'use client';
 
-import { Plus, MoreHorizontal, Eye, Pencil, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { Plus, MoreHorizontal, Eye, Pencil, Trash2, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from '@/components/ui/select';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { toast } from 'sonner';
 import { usePageStore } from '@/lib/router-store';
@@ -9,11 +13,18 @@ import { mockCustomers, mockProjects } from '@/lib/mock-data';
 import SmartTable from '@/components/smart-table/SmartTable';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { PageHeader } from '@/components/shared/PageHelpers';
+import { QueryBoundary } from '@/components/shared/QueryBoundary';
 import { cn } from '@/lib/utils';
+import { useProjectsList } from '@/hooks/use-projects';
+import { useCustomersList } from '@/hooks/use-customers';
 
 export default function CustomersPage() {
   const { navigate } = usePageStore();
-  const projects = mockProjects;
+  const [projectFilter, setProjectFilter] = useState<string>('');
+  const { data: apiProjects, isLoading, isError, error } = useProjectsList();
+  const projects = apiProjects ?? mockProjects;
+  const { data: apiCustomers } = useCustomersList(projectFilter);
+  const customers = apiCustomers ?? mockCustomers;
 
   const columns = [
     { key: 'code', label: 'Code', sortable: true, width: '120px' },
@@ -74,23 +85,26 @@ export default function CustomersPage() {
           </Button>
         }
       />
+      <QueryBoundary isLoading={isLoading} isError={isError} error={error}>
+      {/* Project Selector */}
+      <div className="mb-4">
+        <Select value={projectFilter} onValueChange={(v) => setProjectFilter(v)}>
+          <SelectTrigger className="max-w-xs">
+            <SelectValue placeholder="All Projects" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="">All Projects</SelectItem>
+            {projects.map((p) => (
+              <SelectItem key={p.id} value={p.id}>{p.name} ({p.code})</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
       <SmartTable
-        data={mockCustomers}
+        data={customers}
         columns={columns}
         filters={[
-          {
-            key: 'projectId', label: 'Project', type: 'select',
-            options: projects.map((p) => ({ label: p.name, value: p.id })),
-          },
-          {
-            key: 'customerType', label: 'Customer Type', type: 'select',
-            options: [
-              { label: 'Residential', value: 'residential' },
-              { label: 'Commercial', value: 'commercial' },
-              { label: 'Government', value: 'government' },
-              { label: 'Industrial', value: 'industrial' },
-            ],
-          },
           {
             key: 'balanceState', label: 'Balance', type: 'select',
             options: [
@@ -112,6 +126,7 @@ export default function CustomersPage() {
         searchPlaceholder="Search customers..."
         onRowClick={(row) => navigate('customer-detail', { id: row.id })}
       />
+      </QueryBoundary>
     </div>
   );
 }

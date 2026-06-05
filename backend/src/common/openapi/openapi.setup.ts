@@ -12,14 +12,14 @@ export function setupOpenApi(app: INestApplication): void {
         type: 'http',
         scheme: 'bearer',
         bearerFormat: 'JWT',
-        in: 'header',
+        in: 'header'
       },
-      'JWT-auth',
+      'JWT-auth'
     )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/v1/docs', app, document, {
-    jsonDocumentUrl: 'api/v1/docs-json',
+    jsonDocumentUrl: 'api/v1/docs-json'
   });
 }

@@ -5,5 +5,5 @@ export enum Role {
   TECHNICIAN = 'technician',
   FINANCE = 'finance',
   SUPPORT = 'support',
-  CUSTOMER = 'customer',
+  CUSTOMER = 'customer'
 }

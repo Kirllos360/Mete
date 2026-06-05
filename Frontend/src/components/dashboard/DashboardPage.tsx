@@ -38,11 +38,12 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { cn } from '@/lib/utils';
+import { useDashboardKpis, useConsumptionTrend, useRecentActivity } from '@/hooks/use-dashboard';
 import {
   mockKPIs,
   mockConsumptionData,
   mockAlerts,
-  mockRecentActivity,
+  mockRecentActivity as mockRecentActivityData,
   mockMeters,
 } from '@/lib/mock-data';
 
@@ -349,8 +350,29 @@ function formatTime(timestamp: string) {
 // ---- Main Dashboard ----
 
 export default function DashboardPage() {
-  const meterStatusData = getMeterStatusData();
-  const alertSummary = getAlertSummary();
+  const kpisQuery = useDashboardKpis();
+  const consumptionQuery = useConsumptionTrend();
+  const activityQuery = useRecentActivity();
+
+  const apiKpis = kpisQuery.data?.kpis;
+  const mergedKPIs = apiKpis
+    ? mockKPIs.map(mk => {
+        const apiKpi = apiKpis.find(ak => ak.label === mk.label);
+        return apiKpi ? { ...mk, value: apiKpi.value, change: apiKpi.change } : mk;
+      })
+    : mockKPIs;
+
+  const consumptionData = consumptionQuery.data?.data ?? mockConsumptionData;
+  const recentActivity = activityQuery.data?.items ?? mockRecentActivityData;
+
+  const meterStatusData = kpisQuery.data?.meterStatusDistribution
+    ? kpisQuery.data.meterStatusDistribution.map(d => ({ name: d.status, value: d.count }))
+    : getMeterStatusData();
+
+  const apiAlertCounts = kpisQuery.data?.alertSeverityCounts;
+  const alertSummary = apiAlertCounts
+    ? { critical: 0, high: 0, medium: 0, low: 0, ...Object.fromEntries(apiAlertCounts.map(a => [a.severity, a.count])) }
+    : getAlertSummary();
   const totalAlerts =
     alertSummary.critical + alertSummary.high + alertSummary.medium + alertSummary.low;
 
@@ -366,7 +388,7 @@ export default function DashboardPage() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        {mockKPIs.map((kpi, i) => (
+        {mergedKPIs.map((kpi, i) => (
           <KPICard key={kpi.label} {...kpi} index={i} />
         ))}
       </div>
@@ -397,7 +419,7 @@ export default function DashboardPage() {
           </div>
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={mockConsumptionData}>
+              <AreaChart data={consumptionData}>
                 <defs>
                   <linearGradient id="elecGrad" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#A3FF12" stopOpacity={0.3} />
@@ -670,7 +692,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="space-y-1 max-h-[400px] overflow-y-auto pr-1 custom-scrollbar">
-          {mockRecentActivity.map((item, idx) => {
+          {recentActivity.map((item, idx) => {
             const IconComp = activityIconMap[item.type] ?? Activity;
             const colorClass = activityColorMap[item.type] ?? 'text-slate-400 bg-slate-400/10';
 
@@ -689,7 +711,7 @@ export default function DashboardPage() {
                   >
                     <IconComp className="h-3.5 w-3.5" />
                   </div>
-                  {idx < mockRecentActivity.length - 1 && (
+                  {idx < recentActivity.length - 1 && (
                     <div className="w-px h-full min-h-[8px] bg-border/30 mt-1" />
                   )}
                 </div>

@@ -2,6 +2,8 @@
 
 import { usePageStore } from '@/lib/router-store';
 import { mockMeters, mockReadings, mockSimCards, mockInvoices } from '@/lib/mock-data';
+import { useMeterDetail } from '@/hooks/use-meters';
+import { QueryBoundary } from '@/components/shared/QueryBoundary';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BackButton, StatCard, formatDate, formatDateTime } from '@/components/shared/PageHelpers';
 import { StatusBadge } from '@/components/shared/StatusBadge';
@@ -12,7 +14,8 @@ import { Zap, Droplets, Wifi, MapPin, Building2, Home, User } from 'lucide-react
 
 export default function MeterDetailPage() {
   const { pageParams } = usePageStore();
-  const meter = mockMeters.find((m) => m.id === pageParams.id);
+  const meterQuery = useMeterDetail(pageParams.id);
+  const meter = meterQuery.data ?? mockMeters.find((m) => m.id === pageParams.id);
 
   if (!meter) {
     return (
@@ -35,6 +38,7 @@ export default function MeterDetailPage() {
   return (
     <div>
       <BackButton fallback="meters" />
+      <QueryBoundary query={meterQuery}>
 
       {/* Header */}
       <div className="glass-card rounded-xl p-6 mb-6">
@@ -155,6 +159,7 @@ export default function MeterDetailPage() {
         <TabsContent value="alerts"><div className="text-center py-8 text-muted-foreground text-sm">No alerts for this meter.</div></TabsContent>
         <TabsContent value="maintenance"><div className="text-center py-8 text-muted-foreground text-sm">No maintenance records.</div></TabsContent>
       </Tabs>
+      </QueryBoundary>
     </div>
   );
 }

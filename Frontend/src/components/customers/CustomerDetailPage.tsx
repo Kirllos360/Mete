@@ -8,10 +8,14 @@ import { StatusBadge } from '@/components/shared/StatusBadge';
 import SmartTable from '@/components/smart-table/SmartTable';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Phone, Mail, MapPin, Gauge, CreditCard } from 'lucide-react';
+import { useProjectsList } from '@/hooks/use-projects';
 
 export default function CustomerDetailPage() {
   const { pageParams } = usePageStore();
+  const { data: apiProjects } = useProjectsList();
+  const projects = apiProjects ?? [];
   const customer = mockCustomers.find((c) => c.id === pageParams.id);
+  const project = projects.find((p) => p.id === customer?.projectId);
 
   if (!customer) {
     return (
@@ -43,7 +47,7 @@ export default function CustomerDetailPage() {
             <div className="flex flex-wrap gap-4 mt-3 text-sm text-muted-foreground">
               <span className="flex items-center gap-1"><Phone className="h-3.5 w-3.5" /> {customer.phone}</span>
               <span className="flex items-center gap-1"><Mail className="h-3.5 w-3.5" /> {customer.email}</span>
-              <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> {customer.projectName}</span>
+              <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> {project?.name ?? customer.projectName}</span>
             </div>
             {customer.address && <p className="text-xs text-muted-foreground mt-1">{customer.address}</p>}
           </div>
@@ -82,7 +86,7 @@ export default function CustomerDetailPage() {
               <CardContent className="text-sm space-y-2">
                 <div className="flex justify-between"><span className="text-muted-foreground">Code</span><span>{customer.code}</span></div>
                 <div className="flex justify-between"><span className="text-muted-foreground">Type</span><StatusBadge status={customer.customerType} /></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Project</span><span>{customer.projectName}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">Project</span><span>{project?.name ?? customer.projectName}</span></div>
                 <div className="flex justify-between"><span className="text-muted-foreground">Created</span><span>{formatDate(customer.createdAt)}</span></div>
               </CardContent>
             </Card>

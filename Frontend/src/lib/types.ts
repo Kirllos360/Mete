@@ -121,6 +121,18 @@ export interface Building {
   createdAt: string;
 }
 
+export interface Location {
+  id: string;
+  projectId: string;
+  parentId?: string | null;
+  nodeType: 'zone' | 'building' | 'floor' | 'unit';
+  code: string;
+  name: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Floor {
   id: string;
   buildingId: string;

@@ -10,11 +10,14 @@ import {
   LogOut,
   User,
   ChevronDown,
+  Check,
+  CheckCheck,
+  Trash2,
 } from 'lucide-react';
 import { useAuthStore, getRoleLabel, getRoleColor } from '@/lib/mock-auth';
 import { useTheme } from '@/components/layout/ThemeProvider';
 import { useT, useLocale } from '@/lib/i18n/context';
-import { mockAlerts } from '@/lib/mock-data';
+import { useUnreadCount, useNotifications, useMarkRead, useMarkAllRead, useDeleteNotification } from '@/hooks/use-notifications';
 import { RoleSwitcher } from './RoleSwitcher';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -34,6 +37,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 
 interface TopNavProps {
@@ -47,7 +51,13 @@ export function TopNav({ onMenuClick }: TopNavProps) {
   const t = useT();
   const { locale, toggleLocale } = useLocale();
 
-  const unacknowledgedCount = mockAlerts.filter((a) => !a.acknowledged).length;
+  const { data: unreadData } = useUnreadCount();
+  const { data: notifData } = useNotifications();
+  const markReadMutation = useMarkRead();
+  const markAllReadMutation = useMarkAllRead();
+  const deleteNotifMutation = useDeleteNotification();
+  const unacknowledgedCount = unreadData?.count ?? 0;
+  const notifications = notifData?.items ?? [];
 
   const initials = user?.name
     ? user.name
@@ -124,26 +134,55 @@ export function TopNav({ onMenuClick }: TopNavProps) {
           </div>
 
           {/* Notifications */}
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative size-9">
-                  <Bell className="size-[18px]" />
-                  {unacknowledgedCount > 0 && (
-                    <Badge
-                      className="absolute -top-0.5 -end-0.5 size-4 p-0 flex items-center justify-center text-[10px] bg-destructive text-white border-0"
-                    >
-                      {unacknowledgedCount > 9 ? '9+' : unacknowledgedCount}
-                    </Badge>
-                  )}
-                  <span className="sr-only">{t('nav.notifications')}</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                {t('nav.unread', { count: unacknowledgedCount })}
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="relative size-9">
+                <Bell className="size-[18px]" />
+                {unacknowledgedCount > 0 && (
+                  <Badge className="absolute -top-0.5 -end-0.5 size-4 p-0 flex items-center justify-center text-[10px] bg-destructive text-white border-0">
+                    {unacknowledgedCount > 9 ? '9+' : unacknowledgedCount}
+                  </Badge>
+                )}
+                <span className="sr-only">{t('nav.notifications')}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-80">
+              <DropdownMenuLabel className="flex items-center justify-between">
+                <span>Notifications</span>
+                {unacknowledgedCount > 0 && (
+                  <Button variant="ghost" size="sm" className="h-6 text-xs gap-1" onClick={() => markAllReadMutation.mutate()}>
+                    <CheckCheck className="h-3 w-3" /> Mark all read
+                  </Button>
+                )}
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {notifications.length === 0 ? (
+                <div className="p-4 text-center text-sm text-muted-foreground">No notifications</div>
+              ) : (
+                <ScrollArea className="h-[300px]">
+                  {notifications.slice(0, 20).map((n: any) => (
+                    <div key={n.id} className={cn('flex items-start gap-2 p-3 border-b border-border/30 text-sm', !n.isRead && 'bg-muted/20')}>
+                      <div className="flex-1 min-w-0">
+                        <p className={cn('font-medium truncate', !n.isRead && 'text-foreground')}>{n.title}</p>
+                        {n.body && <p className="text-xs text-muted-foreground truncate">{n.body}</p>}
+                        <p className="text-[10px] text-muted-foreground mt-0.5">{new Date(n.createdAt).toLocaleDateString()}</p>
+                      </div>
+                      <div className="flex gap-1 shrink-0">
+                        {!n.isRead && (
+                          <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => markReadMutation.mutate(n.id)}>
+                            <Check className="h-3 w-3" />
+                          </Button>
+                        )}
+                        <Button variant="ghost" size="icon" className="h-6 w-6 text-red-400" onClick={() => deleteNotifMutation.mutate(n.id)}>
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </ScrollArea>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           {/* Theme Toggle */}
           <TooltipProvider>

@@ -665,6 +665,24 @@ model LoginAttempt {
   @@index([userId, attemptedAt])
 }
 
+model Notification {
+  id          String   @id @default(uuid()) @map("id")
+  userId      String   @map("user_id")
+  title       String   @map("title")
+  body        String?  @map("body")
+  type        String   @default("info") @map("type")
+  referenceType  String?  @map("reference_type")
+  referenceId String?  @map("reference_id")
+  isRead      Boolean  @default(false) @map("is_read")
+  readAt      DateTime? @map("read_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([userId, isRead])
+  @@index([createdAt])
+  @@map("notifications")
+  @@schema("sim_system")
+}
+
 // ===== Core Schema Enums (v2.0.0) =====
 
 enum UserStatus {

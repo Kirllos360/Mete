@@ -125,19 +125,7 @@ export default function ProjectDetailPage() {
                 <CardTitle className="text-sm">{t('projects.recentAlerts')}</CardTitle>
               </CardHeader>
               <CardContent>
-                {alerts.length > 0 ? (
-                  <div className="space-y-2">
-                    {alerts.slice(0, 5).map((a) => (
-                      <div key={a.id} className="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
-                        <div>
-                          <p className="text-sm font-medium">{a.title}</p>
-                          <p className="text-xs text-muted-foreground">{a.description}</p>
-                        </div>
-                        <StatusBadge status={a.severity} />
-                      </div>
-                    ))}
-                  </div>
-                ) : <p className="text-sm text-muted-foreground text-center py-4">{t('projects.noAlerts')}</p>}
+                <p className="text-sm text-muted-foreground text-center py-4">{t('projects.noAlerts')}</p>
               </CardContent>
             </Card>
           </div>

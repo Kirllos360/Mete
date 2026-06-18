@@ -13,6 +13,7 @@ import { PageHeader, formatCurrency, formatDate } from '@/components/shared/Page
 import { cn } from '@/lib/utils';
 import { useT } from '@/lib/i18n/context';
 import { ProtectedAction } from '@/components/shared/ProtectedAction';
+import { downloadFile } from '@/lib/download';
 
 export default function InvoicesPage() {
   const t = useT();
@@ -76,7 +77,7 @@ export default function InvoicesPage() {
             <ProtectedAction action="payment:record">
               <DropdownMenuItem onClick={(e) => { e.stopPropagation(); toast.info('Record payment'); }}><CreditCard className="h-4 w-4 mr-2" /> Record Payment</DropdownMenuItem>
             </ProtectedAction>
-            <DropdownMenuItem onClick={(e) => { e.stopPropagation(); window.open(`http://localhost:3001/api/v1/downloads/invoices/${row.id}/pdf`, '_blank'); }}><Download className="h-4 w-4 mr-2" /> {t('billing.invoices.download')}</DropdownMenuItem>
+            <DropdownMenuItem onClick={(e) => { e.stopPropagation(); downloadFile(`http://localhost:3001/api/v1/downloads/invoices/${row.id}/pdf`, `invoice-${row.invoiceNumber}.pdf`); }}><Download className="h-4 w-4 mr-2" /> {t('billing.invoices.download')}</DropdownMenuItem>
             <ProtectedAction action="invoice:cancel">
               {row.status === 'draft' && <DropdownMenuItem onClick={(e) => { e.stopPropagation(); toast.info('Invoice cancelled'); }} className="text-red-500"><XCircle className="h-4 w-4 mr-2" /> Cancel</DropdownMenuItem>}
             </ProtectedAction>

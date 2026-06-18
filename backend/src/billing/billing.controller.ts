@@ -10,7 +10,8 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
-  Logger
+  Logger,
+  InternalServerErrorException
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
@@ -74,7 +75,15 @@ export class BillingController {
       orderBy: { readingAt: 'asc' }
     });
 
+    const existingInvoices = await this.prisma.invoice.findMany({
+      where: { projectId: dto.projectId, billingPeriodId: dto.billingPeriodId },
+      select: { meterId: true }
+    });
+    const metersWithInvoices = new Set(existingInvoices.map((i) => i.meterId));
+
     for (const meter of meters) {
+      if (metersWithInvoices.has(meter.id)) continue;
+
       const tariff = await this.tariffService.getEffectiveTariff(
         dto.projectId,
         meter.meterType,
@@ -89,10 +98,11 @@ export class BillingController {
       const utilityType = meter.meterType === 'electricity' ? 'electricity' : 'water';
       const subtotal = Number(tariff.ratePerUnit) * consumption;
       const tax = subtotal * taxRate;
+      const seq = Date.now().toString(36).slice(-4);
 
       const invoice = await this.prisma.invoice.create({
         data: {
-          invoiceNumber: `INV-${period.periodCode}-${meter.id.substring(0, 8)}`,
+          invoiceNumber: `INV-${period.periodCode}-${meter.id.substring(0, 8)}-${seq}`,
           projectId: dto.projectId,
           customerId: dto.customerIds?.[0] ?? 'system',
           unitId: 'system',
@@ -137,7 +147,7 @@ export class BillingController {
     return { batchId: `batch-${Date.now()}`, generatedCount: count };
     } catch (err: any) {
       this.logger.error(`Invoice generation failed: ${err.message}`, err.stack);
-      throw err;
+      throw new InternalServerErrorException(`Invoice generation failed: ${err.message}`);
     }
   }
 
@@ -353,9 +363,10 @@ export class BillingController {
       effectiveFrom: string;
       effectiveTo?: string;
       status?: string;
-      createdBy: string;
-    }
+    },
+    @Req() req: { user: { userId: string } }
   ) {
+    const userId = req.user.userId;
     return this.prisma.tariffPlan.create({
       data: {
         projectId: dto.projectId,
@@ -365,8 +376,8 @@ export class BillingController {
         effectiveFrom: new Date(dto.effectiveFrom),
         effectiveTo: dto.effectiveTo ? new Date(dto.effectiveTo) : null,
         status: (dto.status as any) ?? 'active',
-        createdBy: dto.createdBy,
-        updatedBy: dto.createdBy
+        createdBy: userId,
+        updatedBy: userId
       }
     });
   }

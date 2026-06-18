@@ -5,7 +5,7 @@ export interface TranslationDict {
 }
 
 const en: TranslationDict = {
-  app: { name: '???? ?????????', tagline: 'Utility Metering & Billing Management' },
+  app: { name: 'Meter Verse', tagline: 'Utility Metering & Billing Management' },
   nav: {
     search: 'Search meters, customers, readings...',
     menu: 'Toggle menu',
@@ -523,7 +523,7 @@ const en: TranslationDict = {
 };
 
 const ar: TranslationDict = {
-  app: { name: 'ميتر فيرس', tagline: 'إدارة عدادات وفواتير المرافق' },
+  app: { name: '\u0639\u0627\u0644\u0645 \u0627\u0644\u0639\u062F\u0627\u062F\u0627\u062A', tagline: '\u0625\u062F\u0627\u0631\u0629 \u0639\u062F\u0627\u062F\u0627\u062A \u0648\u0641\u0648\u0627\u062A\u064A\u0631 \u0627\u0644\u0645\u0631\u0627\u0641\u0642' },
   nav: {
     search: 'البحث في العدادات والعملاء والقراءات...',
     menu: 'القائمة',

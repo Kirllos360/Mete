@@ -1,61 +1,55 @@
 'use client';
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useT } from '@/lib/i18n/context';
 import { PageHeader } from '@/components/shared/PageHelpers';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import SmartTable from '@/components/smart-table/SmartTable';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
-import { mockUsers } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { apiGet, apiPatch } from '@/lib/api';
 
 export default function SettingsPage() {
   const t = useT();
   const { theme, setTheme } = useTheme();
-  const [companyName, setCompanyName] = useState('???? ?????????');
-  const [companyEmail, setCompanyEmail] = useState('info@meterpulse.com');
-  const [companyPhone, setCompanyPhone] = useState('+201012345670');
-  const [readingThreshold, setReadingThreshold] = useState('500');
-  const [waterThreshold, setWaterThreshold] = useState('10');
-  const [emailNotif, setEmailNotif] = useState(true);
-  const [smsNotif, setSmsNotif] = useState(false);
-  const [alertNotif, setAlertNotif] = useState(true);
+  const qc = useQueryClient();
+  const { data: settingsData } = useQuery({ queryKey: ['settings'], queryFn: () => apiGet<Record<string, string>>('/settings') });
+  const s = settingsData ?? {};
+  const [vals, setVals] = useState<Record<string, string>>({});
 
-  const userColumns = [
-    { key: 'name', label: t('customers.name'), sortable: true },
-    { key: 'email', label: t('login.email') },
-    { key: 'role', label: t('nav.role'), render: (v: string) => <StatusBadge status={v} /> },
-    { key: 'phone', label: t('customers.phone'), render: (v: string) => v || '-' },
-  ];
+  useEffect(() => { if (Object.keys(s).length > 0 && Object.keys(vals).length === 0) setVals(s); }, [s]);
 
-  const tariffData = [
-    { name: 'Residential Tier 1', electricity: 1.25, water: 5.50 },
-    { name: 'Residential Tier 2', electricity: 1.15, water: 4.80 },
-    { name: 'Commercial Tier 1', electricity: 2.00, water: 8.00 },
-    { name: 'Commercial Tier 2', electricity: 2.50, water: 10.00 },
-    { name: 'Industrial', electricity: 3.00, water: 12.00 },
-  ];
+  const saveMutation = useMutation({
+    mutationFn: (data: Record<string, string>) => apiPatch('/settings', data),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['settings'] }); toast.success('Settings saved'); },
+    onError: () => { toast.error('Failed to save'); },
+  });
+
+  const set = (k: string, v: string) => setVals((prev) => ({ ...prev, [k]: v }));
+  const save = (section: string) => {
+    const filtered: Record<string, string> = {};
+    Object.entries(vals).filter(([k]) => k.startsWith(section)).forEach(([k, v]) => { filtered[k] = v; });
+    saveMutation.mutate(filtered);
+  };
+
+  const { data: usersData } = useQuery({ queryKey: ['users'], queryFn: () => apiGet<any[]>('/users').catch(() => []) });
+  const users = usersData ?? [];
 
   return (
     <div>
       <PageHeader title={t('settings.title')} subtitle={t('settings.system')} />
-
       <Tabs defaultValue="general">
         <TabsList className="mb-6 flex-wrap h-auto gap-1">
           <TabsTrigger value="general">{t('settings.preferences')}</TabsTrigger>
           <TabsTrigger value="roles">{t('settings.team')}</TabsTrigger>
-          <TabsTrigger value="tariff">{t('billing.tariffs.title')}</TabsTrigger>
-          <TabsTrigger value="billing">Billing Period</TabsTrigger>
           <TabsTrigger value="reading">{t('readings.title')}</TabsTrigger>
-          <TabsTrigger value="water">Water Thresholds</TabsTrigger>
           <TabsTrigger value="notifications">{t('settings.notifications')}</TabsTrigger>
           <TabsTrigger value="theme">{t('settings.theme')}</TabsTrigger>
         </TabsList>
@@ -64,19 +58,10 @@ export default function SettingsPage() {
           <Card className="glass-card border-border/50 max-w-lg">
             <CardHeader><CardTitle className="text-sm">{t('settings.system')}</CardTitle></CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <Label>{t('settings.profile')}</Label>
-                <Input value={companyName} onChange={(e) => setCompanyName(e.target.value)} className="mt-1" />
-              </div>
-              <div>
-                <Label>{t('login.email')}</Label>
-                <Input value={companyEmail} onChange={(e) => setCompanyEmail(e.target.value)} className="mt-1" />
-              </div>
-              <div>
-                <Label>{t('customers.phone')}</Label>
-                <Input value={companyPhone} onChange={(e) => setCompanyPhone(e.target.value)} className="mt-1" />
-              </div>
-              <Button onClick={() => toast.success(t('common.saving'))}>{t('common.save')}</Button>
+              <div><Label>Company Name</Label><Input value={vals['company_name'] ?? s['company_name'] ?? 'Meter Verse'} onChange={(e) => set('company_name', e.target.value)} className="mt-1" /></div>
+              <div><Label>{t('login.email')}</Label><Input value={vals['company_email'] ?? s['company_email'] ?? ''} onChange={(e) => set('company_email', e.target.value)} className="mt-1" /></div>
+              <div><Label>{t('customers.phone')}</Label><Input value={vals['company_phone'] ?? s['company_phone'] ?? ''} onChange={(e) => set('company_phone', e.target.value)} className="mt-1" /></div>
+              <Button onClick={() => save('company_')}>{saveMutation.isPending ? 'Saving...' : t('common.save')}</Button>
             </CardContent>
           </Card>
         </TabsContent>
@@ -85,90 +70,22 @@ export default function SettingsPage() {
           <Card className="glass-card border-border/50">
             <CardHeader><CardTitle className="text-sm">{t('settings.team')}</CardTitle></CardHeader>
             <CardContent>
-              <SmartTable
-                data={mockUsers}
-                columns={userColumns}
-                searchPlaceholder={t('common.search')}
-                searchKeys={['name', 'email']}
-              />
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="tariff">
-          <Card className="glass-card border-border/50">
-            <CardHeader><CardTitle className="text-sm">{t('billing.tariffs.title')}</CardTitle></CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border/50 text-muted-foreground">
-                      <th className="text-left py-2 pr-4">{t('billing.tariffs.name')}</th>
-                      <th className="text-right py-2 px-4">Electricity (EGP/kWh)</th>
-                      <th className="text-right py-2 pl-4">Water (EGP/m³)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {tariffData.map((t) => (
-                      <tr key={t.name} className="border-b border-border/30">
-                        <td className="py-2 pr-4 font-medium">{t.name}</td>
-                        <td className="text-right py-2 px-4">{t.electricity.toFixed(2)}</td>
-                        <td className="text-right py-2 pl-4">{t.water.toFixed(2)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="billing">
-          <Card className="glass-card border-border/50 max-w-lg">
-            <CardHeader><CardTitle className="text-sm">Billing Period Settings</CardTitle></CardHeader>
-            <CardContent className="space-y-4 text-sm">
-              <div className="flex justify-between"><span className="text-muted-foreground">Billing Cycle</span><span>Monthly</span></div>
-              <div className="flex justify-between"><span className="text-muted-foreground">Start Day</span><span>15th</span></div>
-              <div className="flex justify-between"><span className="text-muted-foreground">End Day</span><span>14th</span></div>
-              <div className="flex justify-between"><span className="text-muted-foreground">Grace Period</span><span>7 days</span></div>
-              <div className="flex justify-between"><span className="text-muted-foreground">Tax Rate</span><span>9%</span></div>
-              <div className="flex justify-between"><span className="text-muted-foreground">Currency</span><span>EGP</span></div>
+              <SmartTable data={users} columns={[
+                { key: 'name', label: t('customers.name'), sortable: true },
+                { key: 'email', label: t('login.email') },
+                { key: 'role', label: t('nav.role'), render: (v: string) => <StatusBadge status={v} /> },
+              ]} />
             </CardContent>
           </Card>
         </TabsContent>
 
         <TabsContent value="reading">
           <Card className="glass-card border-border/50 max-w-lg">
-            <CardHeader><CardTitle className="text-sm">{t('readings.title')}</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="text-sm">Reading Thresholds</CardTitle></CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <Label>Max Normal Consumption (units)</Label>
-                <Input type="number" value={readingThreshold} onChange={(e) => setReadingThreshold(e.target.value)} className="mt-1" />
-                <p className="text-xs text-muted-foreground mt-1">Readings above this will be flagged as suspicious</p>
-              </div>
-              <div className="flex items-center justify-between text-sm">
-                <span>Flag negative consumption</span>
-                <Switch defaultChecked />
-              </div>
-              <div className="flex items-center justify-between text-sm">
-                <span>Flag zero consumption</span>
-                <Switch defaultChecked />
-              </div>
-              <Button onClick={() => toast.success(t('common.saving'))}>{t('common.save')}</Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="water">
-          <Card className="glass-card border-border/50 max-w-lg">
-            <CardHeader><CardTitle className="text-sm">Water Difference Threshold</CardTitle></CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label>Threshold (%)</Label>
-                <Input type="number" value={waterThreshold} onChange={(e) => setWaterThreshold(e.target.value)} className="mt-1" />
-                <p className="text-xs text-muted-foreground mt-1">Alert if main vs child difference exceeds this percentage</p>
-              </div>
-              <Button onClick={() => toast.success(t('common.saving'))}>{t('common.save')}</Button>
+              <div><Label>Max Consumption (kWh)</Label><Input type="number" value={vals['reading_max'] ?? s['reading_max'] ?? '500'} onChange={(e) => set('reading_max', e.target.value)} className="mt-1" /></div>
+              <div><Label>Water Difference %</Label><Input type="number" value={vals['water_diff_pct'] ?? s['water_diff_pct'] ?? '10'} onChange={(e) => set('water_diff_pct', e.target.value)} className="mt-1" /></div>
+              <Button onClick={() => save('reading_')}>{saveMutation.isPending ? 'Saving...' : t('common.save')}</Button>
             </CardContent>
           </Card>
         </TabsContent>
@@ -177,19 +94,10 @@ export default function SettingsPage() {
           <Card className="glass-card border-border/50 max-w-lg">
             <CardHeader><CardTitle className="text-sm">{t('settings.notifications')}</CardTitle></CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div><p className="text-sm font-medium">{t('settings.notifications')}</p><p className="text-xs text-muted-foreground">Receive alerts via email</p></div>
-                <Switch checked={emailNotif} onCheckedChange={setEmailNotif} />
-              </div>
-              <div className="flex items-center justify-between">
-                <div><p className="text-sm font-medium">SMS Notifications</p><p className="text-xs text-muted-foreground">Receive alerts via SMS</p></div>
-                <Switch checked={smsNotif} onCheckedChange={setSmsNotif} />
-              </div>
-              <div className="flex items-center justify-between">
-                <div><p className="text-sm font-medium">{t('alerts.critical')}</p><p className="text-xs text-muted-foreground">Immediate notification for critical alerts</p></div>
-                <Switch checked={alertNotif} onCheckedChange={setAlertNotif} />
-              </div>
-              <Button onClick={() => toast.success(t('common.saving'))}>{t('common.save')}</Button>
+              <div className="flex items-center justify-between"><Label>Email Notifications</Label><Switch checked={vals['notif_email'] === 'true'} onCheckedChange={(v) => set('notif_email', String(v))} /></div>
+              <div className="flex items-center justify-between"><Label>SMS Notifications</Label><Switch checked={vals['notif_sms'] === 'true'} onCheckedChange={(v) => set('notif_sms', String(v))} /></div>
+              <div className="flex items-center justify-between"><Label>Critical Alerts</Label><Switch checked={vals['notif_critical'] === 'true'} onCheckedChange={(v) => set('notif_critical', String(v))} /></div>
+              <Button onClick={() => save('notif_')}>{saveMutation.isPending ? 'Saving...' : t('common.save')}</Button>
             </CardContent>
           </Card>
         </TabsContent>
@@ -198,19 +106,9 @@ export default function SettingsPage() {
           <Card className="glass-card border-border/50 max-w-lg">
             <CardHeader><CardTitle className="text-sm">{t('settings.theme')}</CardTitle></CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-3 gap-3">
-                {['light', 'dark', 'system'].map((themeVal) => (
-                  <button
-                    key={themeVal}
-                    className={cn(
-                      'p-4 rounded-lg border-2 text-center text-sm font-medium transition-colors',
-                      theme === themeVal ? 'border-primary bg-primary/10' : 'border-border/50 hover:border-primary/30'
-                    )}
-                    onClick={() => setTheme(themeVal)}
-                  >
-                    {themeVal === 'light' ? '☀️' : themeVal === 'dark' ? '🌙' : '💻'}
-                    <p className="mt-1 capitalize">{themeVal === 'light' ? t('nav.theme.light') : themeVal === 'dark' ? t('nav.theme.dark') : t('common.all')}</p>
-                  </button>
+              <div className="flex gap-2">
+                {(['light', 'dark', 'system'] as const).map((t) => (
+                  <Button key={t} variant={theme === t ? 'default' : 'outline'} onClick={() => setTheme(t)} className="capitalize">{t}</Button>
                 ))}
               </div>
             </CardContent>

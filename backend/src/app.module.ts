@@ -23,6 +23,7 @@ import { BillingModule } from './billing/billing.module';
 import { PaymentsModule } from './payments/payments.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { DownloadsModule } from './downloads/downloads.module';
+import { InvoicesModule } from './invoices/invoices.module';
 import { ReportsModule } from './reports/reports.module';
 import { TicketsModule } from './tickets/tickets.module';
 import { SupportModule } from './support/support.module';
@@ -49,6 +50,7 @@ import { CorrelationMiddleware } from './common/http/correlation.middleware';
     PaymentsModule,
     NotificationsModule,
     DownloadsModule,
+    InvoicesModule,
     ReportsModule,
     TicketsModule,
     SupportModule,

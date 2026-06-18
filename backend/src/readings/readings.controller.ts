@@ -25,7 +25,7 @@ export class ReadingsController {
   constructor(private readonly readingsService: ReadingsService) {}
 
   @Post()
-  @Roles(Role.OPERATOR, Role.TECHNICIAN, Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.OPERATOR, Role.TECHNICIAN, Role.ADMIN, Role.SUPER_ADMIN)
   @Audit('reading', 'create')
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreateReadingDto, @Req() req: { user: { userId: string } }) {
@@ -33,21 +33,21 @@ export class ReadingsController {
   }
 
   @Get()
-  @Roles(Role.OPERATOR, Role.TECHNICIAN, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
+  @Roles(Role.OPERATOR, Role.TECHNICIAN, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
   @HttpCode(HttpStatus.OK)
   async findAll(@Query('projectId') projectId?: string) {
     return this.readingsService.findAll(projectId);
   }
 
   @Get('review-queue')
-  @Roles(Role.OPERATOR, Role.TECHNICIAN, Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.OPERATOR, Role.TECHNICIAN, Role.ADMIN, Role.SUPER_ADMIN)
   @HttpCode(HttpStatus.OK)
   async listReviewQueue(@Query('projectId') projectId?: string, @Query('status') status?: string) {
     return this.readingsService.listReviewQueue({ projectId, status });
   }
 
   @Get(':id')
-  @Roles(Role.OPERATOR, Role.TECHNICIAN, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
+  @Roles(Role.OPERATOR, Role.TECHNICIAN, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
   @HttpCode(HttpStatus.OK)
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.readingsService.findOne(id);

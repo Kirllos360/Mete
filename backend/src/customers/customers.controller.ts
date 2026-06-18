@@ -33,7 +33,7 @@ export class CustomersController {
   ) {}
 
   @Post()
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN)
   @Audit('customer', 'create')
   @HttpCode(HttpStatus.CREATED)
   async create(
@@ -47,7 +47,7 @@ export class CustomersController {
   @Get()
   @Roles(
     Role.OPERATOR,
-    Role.PROJECT_ADMIN,
+    Role.ADMIN,
     Role.SUPER_ADMIN,
     Role.TECHNICIAN,
     Role.FINANCE,
@@ -60,7 +60,7 @@ export class CustomersController {
   @Get(':id')
   @Roles(
     Role.OPERATOR,
-    Role.PROJECT_ADMIN,
+    Role.ADMIN,
     Role.SUPER_ADMIN,
     Role.TECHNICIAN,
     Role.FINANCE,
@@ -74,7 +74,7 @@ export class CustomersController {
   }
 
   @Patch(':id')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN)
   @Audit('customer', 'update')
   async update(
     @Param('projectId', ParseUUIDPipe) projectId: string,
@@ -86,7 +86,7 @@ export class CustomersController {
   }
 
   @Delete(':id')
-  @Roles(Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.ADMIN, Role.SUPER_ADMIN)
   @Audit('customer', 'deactivate')
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(
@@ -98,7 +98,7 @@ export class CustomersController {
   }
 
   @Get(':id/statement')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT, Role.CUSTOMER)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT, Role.CUSTOMER)
   @ApiOperation({ summary: 'Get customer statement with debit/credit/running balance' })
   async getStatement(
     @Param('projectId', ParseUUIDPipe) projectId: string,

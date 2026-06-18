@@ -3,8 +3,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { DatabaseModule } from '../common/database/database.module';
+import { APP_GUARD } from '@nestjs/core';
 import { JwtStrategy } from './jwt.strategy';
 import { RolesGuard } from './roles.guard';
+import { PermissionsGuard } from './permissions.guard';
 import { AuthController } from './auth.controller';
 import { RefreshTokenService } from './refresh-token.service';
 import { PasswordPolicyService } from './password-policy.service';
@@ -25,12 +27,19 @@ import { PasswordPolicyService } from './password-policy.service';
     })
   ],
   controllers: [AuthController],
-  providers: [JwtStrategy, RolesGuard, RefreshTokenService, PasswordPolicyService],
+  providers: [
+    JwtStrategy,
+    RolesGuard,
+    PermissionsGuard,
+    RefreshTokenService,
+    PasswordPolicyService,
+  ],
   exports: [
     PassportModule,
     JwtModule,
     JwtStrategy,
     RolesGuard,
+    PermissionsGuard,
     RefreshTokenService,
     PasswordPolicyService
   ]

@@ -1,43 +1,112 @@
 import type { UserRole } from './types';
 
 export type BillingAction =
-  | 'invoice:create'
-  | 'invoice:edit'
+  | 'user:manage'
+  | 'user:read'
+  | 'role:manage'
+  | 'area:manage'
+  | 'project:manage'
+  | 'project:read'
+  | 'customer:manage'
+  | 'customer:read'
+  | 'customer:write'
+  | 'meter:manage'
+  | 'meter:read'
+  | 'meter:write'
+  | 'meter:assign'
+  | 'meter:terminate'
+  | 'reading:manage'
+  | 'reading:read'
+  | 'reading:write'
+  | 'reading:approve'
+  | 'invoice:manage'
+  | 'invoice:read'
+  | 'invoice:write'
   | 'invoice:issue'
   | 'invoice:cancel'
-  | 'payment:record'
-  | 'payment:edit'
-  | 'payment:delete'
+  | 'payment:manage'
+  | 'payment:read'
+  | 'payment:write'
   | 'payment:reverse'
-  | 'reading:create'
-  | 'reading:edit'
-  | 'reading:approve'
-  | 'reading:reject'
+  | 'sim:manage'
+  | 'sim:read'
+  | 'sim:write'
+  | 'billing:manage'
+  | 'billing:read'
+  | 'report:read'
+  | 'report:manage'
+  | 'alert:read'
+  | 'alert:manage'
+  | 'ticket:read'
+  | 'ticket:manage'
+  | 'audit:view'
+  | 'config:manage'
+  | 'settlement:run'
+  | 'notification:send'
   | 'admin:access';
 
 const ROLE_HIERARCHY: Record<UserRole, number> = {
   super_admin: 100,
-  project_admin: 80,
-  operator: 60,
+  system_admin: 90,
+  admin: 80,
+  area_manager: 70,
+  team_leader: 65,
+  supervisor: 60,
+  operator: 55,
   technician: 50,
-  finance: 40,
-  support: 30,
-  customer: 0,
+  finance: 45,
+  accountant: 40,
+  support: 35,
+  collector: 30,
+  meter_reader: 25,
+  inspector: 20,
+  viewer: 10,
+  customer: 5,
 };
 
 const ACTION_MINIMUM_ROLE: Record<BillingAction, UserRole> = {
-  'invoice:create': 'operator',
-  'invoice:edit': 'operator',
-  'invoice:issue': 'operator',
-  'invoice:cancel': 'project_admin',
-  'payment:record': 'finance',
-  'payment:edit': 'operator',
-  'payment:delete': 'project_admin',
-  'payment:reverse': 'project_admin',
-  'reading:create': 'technician',
-  'reading:edit': 'technician',
-  'reading:approve': 'operator',
-  'reading:reject': 'operator',
+  'user:manage': 'super_admin',
+  'user:read': 'system_admin',
+  'role:manage': 'super_admin',
+  'area:manage': 'system_admin',
+  'project:manage': 'admin',
+  'project:read': 'viewer',
+  'customer:manage': 'admin',
+  'customer:read': 'viewer',
+  'customer:write': 'area_manager',
+  'meter:manage': 'admin',
+  'meter:read': 'viewer',
+  'meter:write': 'team_leader',
+  'meter:assign': 'area_manager',
+  'meter:terminate': 'admin',
+  'reading:manage': 'admin',
+  'reading:read': 'viewer',
+  'reading:write': 'technician',
+  'reading:approve': 'team_leader',
+  'invoice:manage': 'admin',
+  'invoice:read': 'viewer',
+  'invoice:write': 'area_manager',
+  'invoice:issue': 'area_manager',
+  'invoice:cancel': 'admin',
+  'payment:manage': 'admin',
+  'payment:read': 'viewer',
+  'payment:write': 'collector',
+  'payment:reverse': 'finance',
+  'sim:manage': 'admin',
+  'sim:read': 'operator',
+  'sim:write': 'operator',
+  'billing:manage': 'system_admin',
+  'billing:read': 'finance',
+  'report:read': 'viewer',
+  'report:manage': 'super_admin',
+  'alert:read': 'viewer',
+  'alert:manage': 'admin',
+  'ticket:read': 'viewer',
+  'ticket:manage': 'operator',
+  'audit:view': 'admin',
+  'config:manage': 'super_admin',
+  'settlement:run': 'accountant',
+  'notification:send': 'system_admin',
   'admin:access': 'super_admin',
 };
 

@@ -39,16 +39,22 @@ export class BillingController {
   ) {}
 
   @Post('invoices/generate')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE)
   @HttpCode(HttpStatus.ACCEPTED)
   @ApiOperation({ summary: 'Generate invoices for billing period' })
   async generateInvoices(
     @Body() dto: { projectId: string; billingPeriodId: string; customerIds?: string[] }
   ) {
-    const [period, project] = await Promise.all([
-      this.prisma.billingPeriod.findUnique({ where: { id: dto.billingPeriodId } }),
-      this.prisma.project.findUnique({ where: { id: dto.projectId } })
-    ]);
+    try {
+    let period = await this.prisma.billingPeriod.findUnique({
+      where: { id: dto.billingPeriodId }
+    }).catch(() => null);
+    if (!period) {
+      period = await this.prisma.billingPeriod.findFirst({
+        where: { projectId: dto.projectId, periodCode: dto.billingPeriodId }
+      }).catch(() => null);
+    }
+    const project = await this.prisma.project.findUnique({ where: { id: dto.projectId } });
     if (!period) return { batchId: 'no-period', generatedCount: 0 };
     if (!project) return { batchId: 'no-project', generatedCount: 0 };
 
@@ -129,10 +135,14 @@ export class BillingController {
       count++;
     }
     return { batchId: `batch-${Date.now()}`, generatedCount: count };
+    } catch (err: any) {
+      this.logger.error(`Invoice generation failed: ${err.message}`, err.stack);
+      throw err;
+    }
   }
 
   @Post('invoices/:id/issue')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Issue an invoice' })
   async issueInvoice(@Param('id', ParseUUIDPipe) id: string) {
@@ -163,7 +173,7 @@ export class BillingController {
   }
 
   @Post('invoices/:id/adjustments')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE)
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Add adjustment to invoice' })
   async addAdjustment(
@@ -208,7 +218,7 @@ export class BillingController {
   }
 
   @Post('payments')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE)
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Record payment with oldest-due-first allocation' })
   async createPayment(
@@ -331,7 +341,7 @@ export class BillingController {
   }
 
   @Post('tariffs')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN)
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create tariff plan' })
   async createTariff(
@@ -362,7 +372,7 @@ export class BillingController {
   }
 
   @Get('tariffs')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
   @ApiOperation({ summary: 'List tariffs' })
   async listTariffs(@Query('projectId') projectId?: string) {
     const where: any = {};
@@ -371,7 +381,7 @@ export class BillingController {
   }
 
   @Post('periods')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN)
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create billing period' })
   async createPeriod(
@@ -388,7 +398,7 @@ export class BillingController {
   }
 
   @Get('periods')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
   @ApiOperation({ summary: 'List billing periods' })
   async listPeriods(@Query('projectId') projectId?: string) {
     const where: any = {};
@@ -397,7 +407,7 @@ export class BillingController {
   }
 
   @Get('invoices')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
   @ApiOperation({ summary: 'List invoices' })
   async listInvoices(
     @Query('projectId') projectId?: string,
@@ -432,7 +442,7 @@ export class BillingController {
   }
 
   @Get('invoices/:id')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
   @ApiOperation({ summary: 'Get invoice by ID' })
   async getInvoice(@Param('id', ParseUUIDPipe) id: string) {
     const invoice = await this.prisma.invoice.findUnique({ where: { id } });

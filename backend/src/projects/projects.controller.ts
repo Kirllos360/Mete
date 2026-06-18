@@ -27,7 +27,7 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Post()
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN)
   @Audit('project', 'create')
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreateProjectDto, @Req() req: { user: { userId: string } }) {
@@ -37,7 +37,7 @@ export class ProjectsController {
   @Get()
   @Roles(
     Role.OPERATOR,
-    Role.PROJECT_ADMIN,
+    Role.ADMIN,
     Role.SUPER_ADMIN,
     Role.TECHNICIAN,
     Role.FINANCE,
@@ -50,7 +50,7 @@ export class ProjectsController {
   @Get(':id')
   @Roles(
     Role.OPERATOR,
-    Role.PROJECT_ADMIN,
+    Role.ADMIN,
     Role.SUPER_ADMIN,
     Role.TECHNICIAN,
     Role.FINANCE,
@@ -61,7 +61,7 @@ export class ProjectsController {
   }
 
   @Patch(':id')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN)
   @Audit('project', 'update')
   async update(
     @Param('id', ParseUUIDPipe) id: string,

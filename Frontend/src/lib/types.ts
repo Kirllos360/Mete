@@ -6,12 +6,21 @@
 
 export type UserRole =
   | "super_admin"
-  | "project_admin"
+  | "system_admin"
+  | "admin"
+  | "area_manager"
+  | "team_leader"
   | "operator"
   | "technician"
   | "finance"
   | "support"
-  | "customer";
+  | "customer"
+  | "collector"
+  | "meter_reader"
+  | "inspector"
+  | "supervisor"
+  | "accountant"
+  | "viewer";
 
 export type MeterType = "electricity" | "main_water" | "child_water";
 

@@ -15,7 +15,7 @@ export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 
   @Get()
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
   @ApiOperation({ summary: 'List payments' })
   async findAll(
     @Query('projectId') projectId?: string,
@@ -25,7 +25,7 @@ export class PaymentsController {
   }
 
   @Get(':id')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN, Role.FINANCE, Role.SUPPORT)
   @ApiOperation({ summary: 'Get payment by ID' })
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.paymentsService.findOne(id);

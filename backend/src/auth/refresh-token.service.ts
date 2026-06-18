@@ -59,8 +59,8 @@ export class RefreshTokenService {
     return { accessToken, refreshToken: newRefreshToken };
   }
 
-  private generateAccessToken(userId: string): string {
-    return this.jwtService.sign({ sub: userId, userId });
+  private generateAccessToken(userId: string, role = 'customer'): string {
+    return this.jwtService.sign({ sub: userId, userId, role });
   }
 
   private hashToken(token: string): string {

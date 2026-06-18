@@ -27,7 +27,7 @@ export class LocationsController {
   constructor(private readonly locationsService: LocationsService) {}
 
   @Post()
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN)
   @Audit('location', 'create')
   @HttpCode(HttpStatus.CREATED)
   async create(
@@ -41,7 +41,7 @@ export class LocationsController {
   @Get()
   @Roles(
     Role.OPERATOR,
-    Role.PROJECT_ADMIN,
+    Role.ADMIN,
     Role.SUPER_ADMIN,
     Role.TECHNICIAN,
     Role.FINANCE,
@@ -54,7 +54,7 @@ export class LocationsController {
   @Get(':id')
   @Roles(
     Role.OPERATOR,
-    Role.PROJECT_ADMIN,
+    Role.ADMIN,
     Role.SUPER_ADMIN,
     Role.TECHNICIAN,
     Role.FINANCE,
@@ -68,7 +68,7 @@ export class LocationsController {
   }
 
   @Patch(':id')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN)
   @Audit('location', 'update')
   async update(
     @Param('projectId', ParseUUIDPipe) projectId: string,
@@ -80,7 +80,7 @@ export class LocationsController {
   }
 
   @Delete(':id')
-  @Roles(Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.ADMIN, Role.SUPER_ADMIN)
   @Audit('location', 'deactivate')
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(

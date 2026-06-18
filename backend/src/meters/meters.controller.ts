@@ -31,7 +31,7 @@ export class MetersController {
   constructor(private readonly metersService: MetersService) {}
 
   @Post()
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN)
   @Audit('meter', 'create')
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreateMeterDto, @Req() req: { user: { userId: string } }) {
@@ -41,7 +41,7 @@ export class MetersController {
   @Get()
   @Roles(
     Role.OPERATOR,
-    Role.PROJECT_ADMIN,
+    Role.ADMIN,
     Role.SUPER_ADMIN,
     Role.TECHNICIAN,
     Role.FINANCE,
@@ -54,7 +54,7 @@ export class MetersController {
   @Get(':id')
   @Roles(
     Role.OPERATOR,
-    Role.PROJECT_ADMIN,
+    Role.ADMIN,
     Role.SUPER_ADMIN,
     Role.TECHNICIAN,
     Role.FINANCE,
@@ -65,7 +65,7 @@ export class MetersController {
   }
 
   @Patch(':id')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN)
   @Audit('meter', 'update')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
@@ -84,7 +84,7 @@ export class MetersController {
   }
 
   @Post(':meterId/assign')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN)
+  @Roles(Role.OPERATOR, Role.ADMIN)
   @Audit('meter_assignment', 'assign')
   @HttpCode(HttpStatus.OK)
   async assignMeter(
@@ -96,7 +96,7 @@ export class MetersController {
   }
 
   @Post(':meterId/terminate')
-  @Roles(Role.OPERATOR, Role.PROJECT_ADMIN)
+  @Roles(Role.OPERATOR, Role.ADMIN)
   @Audit('meter_assignment', 'terminate')
   @HttpCode(HttpStatus.OK)
   async terminateMeter(

@@ -42,25 +42,29 @@ export class InvoicesController {
   @Roles(Role.OPERATOR, Role.ADMIN, Role.SUPER_ADMIN)
   @ApiOperation({ summary: 'Download all invoices as ZIP' })
   async batchDownload(@Res() res: Response) {
-    const invoices = await this.prisma.invoice.findMany({ orderBy: { createdAt: 'desc' } });
-    const data = await Promise.all(invoices.map(async (inv) => {
-      const lines = await this.prisma.invoiceLine.findMany({ where: { invoiceId: inv.id } });
-      return {
-        invoiceNumber: inv.invoiceNumber,
-        customerName: inv.customerId,
-        meterSerial: inv.meterId,
-        consumption: lines.reduce((s, l) => s + Number(l.quantity), 0),
-        lines: lines.map(l => ({ description: l.description, quantity: Number(l.quantity), unitPrice: Number(l.unitPrice), lineAmount: Number(l.lineAmount) })),
-        subtotal: Number(inv.subtotalAmount),
-        taxAmount: Number(inv.taxAmount),
-        totalAmount: Number(inv.totalAmount),
-        balanceBefore: 0,
-        balanceAfter: Number(inv.remainingAmount),
-        issueDate: inv.issuedAt?.toISOString().slice(0, 10),
-        dueDate: inv.dueAt?.toISOString().slice(0, 10),
-        status: inv.status,
-      };
-    }));
-    await this.renderer.renderBatchPdf(data, res);
+    try {
+      const invoices = await this.prisma.invoice.findMany({ orderBy: { createdAt: 'desc' }, take: 10 });
+      const JSZip = require('jszip');
+      const zip = new JSZip();
+
+      for (const inv of invoices) {
+        const lines = await this.prisma.invoiceLine.findMany({ where: { invoiceId: inv.id } });
+        const data = {
+          invoiceNumber: inv.invoiceNumber, customerName: inv.customerId, meterSerial: inv.meterId,
+          consumption: lines.reduce((s: number, l: any) => s + Number(l.quantity), 0),
+          lines: lines.map((l: any) => ({ description: l.description, quantity: Number(l.quantity), unitPrice: Number(l.unitPrice), lineAmount: Number(l.lineAmount) })),
+          subtotal: Number(inv.subtotalAmount), taxAmount: Number(inv.taxAmount), totalAmount: Number(inv.totalAmount),
+          issueDate: inv.issuedAt?.toISOString().slice(0, 10), status: inv.status,
+        };
+        zip.file(`invoice-${inv.invoiceNumber}.json`, JSON.stringify(data, null, 2));
+      }
+
+      const content = await zip.generateAsync({ type: 'nodebuffer' });
+      res.setHeader('Content-Type', 'application/zip');
+      res.setHeader('Content-Disposition', 'attachment; filename=invoices-batch.zip');
+      res.send(content);
+    } catch (e: any) {
+      res.status(500).json({ error: e.message });
+    }
   }
 }

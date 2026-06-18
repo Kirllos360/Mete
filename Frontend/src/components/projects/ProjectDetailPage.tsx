@@ -1,7 +1,11 @@
 'use client';
 
 import { usePageStore } from '@/lib/router-store';
-import { mockProjects, mockBuildings, mockUnits, mockCustomers, mockMeters, mockAlerts, mockReadings } from '@/lib/mock-data';
+import { useProjectDetail } from '@/hooks/use-projects';
+import { useLocationsList } from '@/hooks/use-locations';
+import { useCustomersList } from '@/hooks/use-customers';
+import { useMetersList } from '@/hooks/use-meters';
+import { useReadingsList } from '@/hooks/use-readings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BackButton, StatCard } from '@/components/shared/PageHelpers';
 import { StatusBadge } from '@/components/shared/StatusBadge';
@@ -12,13 +16,25 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'rec
 import { Building2, Users, Gauge, FileText, Zap } from 'lucide-react';
 import { formatDate } from '@/components/shared/PageHelpers';
 import { useT } from '@/lib/i18n/context';
-import { useProjectDetail } from '@/hooks/use-projects';
 
 export default function ProjectDetailPage() {
   const t = useT();
   const { pageParams } = usePageStore();
   const { data: apiProject, isLoading, isError, error } = useProjectDetail(pageParams.id ?? '');
-  const project = apiProject ?? mockProjects.find((p) => p.id === pageParams.id);
+  const project = apiProject ?? undefined;
+  const pid = project?.id ?? '';
+  const { data: locations } = useLocationsList(pid);
+  const { data: customers } = useCustomersList(pid);
+  const { data: meters } = useMetersList();
+  const { data: readings } = useReadingsList(pid);
+  const locationsList = locations ?? [];
+  const customersList = customers ?? [];
+  const metersList = meters ?? [];
+  const readingsList = readings ?? [];
+  const buildings = locationsList.filter((l: any) => l.nodeType === 'building');
+  const units = locationsList.filter((l: any) => l.nodeType === 'unit');
+  const projectMeters = metersList.filter((m: any) => m.projectId === pid);
+  const projectReadings = readingsList.filter((r: any) => r.projectId === pid);
 
   if (!project) {
     return (
@@ -31,16 +47,9 @@ export default function ProjectDetailPage() {
     );
   }
 
-  const buildings = mockBuildings.filter((b) => b.projectId === project.id);
-  const units = mockUnits.filter((u) => u.projectId === project.id);
-  const customers = mockCustomers.filter((c) => c.projectId === project.id);
-  const meters = mockMeters.filter((m) => m.projectId === project.id);
-  const alerts = mockAlerts.filter((a) => a.entityId && meters.some((m) => m.id === a.entityId));
-  const readings = mockReadings.filter((r) => r.projectId === project.id);
-
-  const chartData = readings.slice(-6).map((r) => ({
-    date: new Date(r.readingDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-    consumption: r.consumption,
+  const chartData = projectReadings.slice(-6).map((r: any) => ({
+    date: new Date(r.readingAt ?? r.readingDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    consumption: r.consumption ?? r.consumptionValue ?? 0,
   }));
 
   return (

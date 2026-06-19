@@ -45,7 +45,7 @@ interface TopNavProps {
   onSearchClick?: () => void;
 }
 
-export function TopNav({ onMenuClick }: TopNavProps) {
+export function TopNav({ onMenuClick, onSearchClick }: TopNavProps) {
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
   const { theme, setTheme, resolvedTheme } = useTheme();

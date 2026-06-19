@@ -32,7 +32,8 @@ export type PageKey =
   | 'tickets'
   | 'support'
   | 'settings'
-  | 'upload-center';
+  | 'upload-center'
+  | 'tariff-studio';
 
 interface RouterState {
   currentPage: PageKey;

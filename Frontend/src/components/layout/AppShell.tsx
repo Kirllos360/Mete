@@ -59,6 +59,7 @@ import { useT } from '@/lib/i18n/context';
 import { useIsMobile } from '@/hooks/use-mobile';
 import GlobalSearchDialog from '@/components/shared/GlobalSearchDialog';
 import UploadCenterPage from '@/components/upload/UploadCenterPage';
+import TariffStudioPage from '@/components/tariffs/TariffStudioPage';
 
 export function AppShell() {
   const currentPage = usePageStore((s) => s.currentPage);
@@ -213,6 +214,8 @@ function renderPage(page: PageKey): React.ReactNode {
       return <SettingsPage />;
     case 'upload-center':
       return <UploadCenterPage />;
+    case 'tariff-studio':
+      return <TariffStudioPage />;
 
     default:
       return <DefaultNotFound />;

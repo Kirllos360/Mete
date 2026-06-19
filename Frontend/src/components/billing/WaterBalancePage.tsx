@@ -45,7 +45,7 @@ export default function WaterBalancePage() {
           <Select value={selectedProject} onValueChange={setSelectedProject}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent>
-              {mockProjects.filter((p) => p.status === 'active').map((p) => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}
+              {(projects ?? []).filter((p) => p.status === 'active').map((p) => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}
             </SelectContent>
           </Select>
         </div>

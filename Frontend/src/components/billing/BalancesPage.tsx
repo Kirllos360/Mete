@@ -1,6 +1,6 @@
 'use client';
 
-import { mockBalances } from '@/lib/mock-data';
+
 import { isFeatureEnabled } from '@/lib/feature-flags';
 import { PageHeader, StatCard, formatCurrency } from '@/components/shared/PageHelpers';
 import { StatusBadge } from '@/components/shared/StatusBadge';
@@ -14,7 +14,7 @@ import { useT } from '@/lib/i18n/context';
 export default function BalancesPage() {
   const t = useT();
   const useApi = isFeatureEnabled('billing.list');
-  const balances = useApi ? [] : mockBalances;
+  const balances = [];
   const totalInvoiced = balances.reduce((s, b) => s + b.totalInvoiced, 0);
   const totalPaid = balances.reduce((s, b) => s + b.totalPaid, 0);
   const outstanding = balances.reduce((s, b) => s + b.outstandingBalance, 0);

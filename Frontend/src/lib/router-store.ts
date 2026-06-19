@@ -33,7 +33,8 @@ export type PageKey =
   | 'support'
   | 'settings'
   | 'upload-center'
-  | 'tariff-studio';
+  | 'tariff-studio'
+  | 'database-admin';
 
 interface RouterState {
   currentPage: PageKey;

@@ -60,6 +60,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import GlobalSearchDialog from '@/components/shared/GlobalSearchDialog';
 import UploadCenterPage from '@/components/upload/UploadCenterPage';
 import TariffStudioPage from '@/components/tariffs/TariffStudioPage';
+import DatabaseAdminPage from '@/components/admin/DatabaseAdminPage';
 
 export function AppShell() {
   const currentPage = usePageStore((s) => s.currentPage);
@@ -216,6 +217,8 @@ function renderPage(page: PageKey): React.ReactNode {
       return <UploadCenterPage />;
     case 'tariff-studio':
       return <TariffStudioPage />;
+    case 'database-admin':
+      return <DatabaseAdminPage />;
 
     default:
       return <DefaultNotFound />;

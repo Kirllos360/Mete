@@ -105,7 +105,7 @@ export function AppShell() {
   return (
     <div className="min-h-screen bg-background">
       <GlobalSearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
-      <TopNav onMenuClick={() => setSidebarOpen(true)} />
+      <TopNav onMenuClick={() => setSidebarOpen(true)} onSearchClick={() => setSearchOpen(true)} />
       <AppSidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}

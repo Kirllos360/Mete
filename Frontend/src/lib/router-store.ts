@@ -5,6 +5,7 @@ import { create } from 'zustand';
 export type PageKey =
   | 'login'
   | 'dashboard'
+  | 'executive-dashboard'
   | 'projects'
   | 'project-detail'
   | 'locations'

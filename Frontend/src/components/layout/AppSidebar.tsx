@@ -79,6 +79,7 @@ const iconMap: Record<string, LucideIcon> = {
 // ---- Navigation href → PageKey mapping ----
 const hrefToPageKey: Record<string, PageKey> = {
   '/dashboard': 'dashboard',
+  '/executive-dashboard': 'executive-dashboard',
   '/projects': 'projects',
   '/locations': 'locations',
   '/customers': 'customers',

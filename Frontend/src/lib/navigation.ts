@@ -15,6 +15,11 @@ export const allNavItems: NavItem[] = [
     icon: 'LayoutDashboard',
   },
   {
+    title: 'Executive',
+    href: '/executive-dashboard',
+    icon: 'BarChart3',
+  },
+  {
     title: 'Projects',
     href: '/projects',
     icon: 'Building2',

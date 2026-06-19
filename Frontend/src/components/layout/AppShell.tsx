@@ -9,6 +9,7 @@ import { LoginPage } from './LoginPage';
 
 // Dashboard
 import DashboardPage from '@/components/dashboard/DashboardPage';
+import ExecutiveDashboard from '@/components/dashboard/ExecutiveDashboard';
 
 // Projects
 import ProjectsPage from '@/components/projects/ProjectsPage';
@@ -120,6 +121,8 @@ function renderPage(page: PageKey): React.ReactNode {
 
     case 'dashboard':
       return <DashboardPage />;
+    case 'executive-dashboard':
+      return <ExecutiveDashboard />;
 
     case 'projects':
       return <ProjectsPage />;

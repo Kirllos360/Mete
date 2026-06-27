@@ -38,6 +38,7 @@ import { UsersModule } from './users/users.module';
 import { SolarModule } from './solar/solar.module';
 import { SettlementModule } from './settlement/settlement.module';
 import { ChilledWaterModule } from './chilled-water/chilled-water.module';
+import { GasModule } from './gas/gas.module';
 import { AreasModule } from './areas/areas.module';
 import { UnitTypesModule } from './unit-types/unit-types.module';
 import { RegistrationModule } from './registration/registration.module';
@@ -81,6 +82,7 @@ import { CorrelationMiddleware } from './common/http/correlation.middleware';
     SolarModule,
     SettlementModule,
     ChilledWaterModule,
+    GasModule,
     AreasModule,
     UnitTypesModule,
     RegistrationModule,

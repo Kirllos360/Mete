@@ -13,6 +13,7 @@ import { ProjectAccessInterceptor } from './common/interceptors/project-access.i
 import { AuditModule } from './audit/audit.module';
 import { AuditInterceptor } from './audit/audit.interceptor';
 import { IdempotencyModule } from './idempotency/idempotency.module';
+import { WorkersModule } from './common/workers/workers.module';
 import { MetersModule } from './meters/meters.module';
 import { SimCardsModule } from './sim-cards/sim-cards.module';
 import { ProjectsModule } from './projects/projects.module';
@@ -88,6 +89,7 @@ import { CorrelationMiddleware } from './common/http/correlation.middleware';
     WalletModule,
     KpiModule,
     SyncModule,
+    WorkersModule,
   ],
   controllers: [AppController],
   providers: [

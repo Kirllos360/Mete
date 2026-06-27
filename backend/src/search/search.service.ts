@@ -39,7 +39,7 @@ export class SearchService {
 
       return { results, groups };
     } catch (e: any) {
-      return this.basicSearch(query, limit, allowedProjectIds);
+      return this.basicSearch(q, limit, allowedProjectIds);
     }
   }
 

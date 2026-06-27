@@ -112,7 +112,7 @@ router.post('/query', async (req, res) => {
     const upper = sql.trim().toUpperCase();
     if (!upper.startsWith('SELECT') && !upper.startsWith('EXPLAIN') && !upper.startsWith('WITH')) 
       return res.status(403).json({ error: 'Only SELECT queries allowed' });
-    const r = await db.pool.query(sql);
+    const r = await db.pool.query(sql, []);
     res.json({ data: r.rows, total: r.rows.length, fields: r.fields ? r.fields.map(f => ({ name: f.name, dataTypeID: f.dataTypeID })) : [] });
   } catch (e) { res.status(400).json({ error: e.message }); }
 });

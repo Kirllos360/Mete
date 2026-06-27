@@ -22,28 +22,28 @@ TODO → IN PROGRESS → CODE REVIEW → TESTING → READY FOR COMMIT → DONE
 | # | Task | Status | Est. Days |
 |---|------|--------|-----------|
 | P0-001 | Wire TOU Pricing to Billing Engine | ✅ DONE | 5 |
-| P0-002 | Implement Demand Charge Calculation | PENDING | 3 |
-| P0-003 | Implement Penalty Engine | PENDING | 3 |
-| P0-004 | Add Credit/Debit Note Workflows | PENDING | 2 |
+| P0-002 | Implement Demand Charge Calculation | ✅ DONE | 3 |
+| P0-003 | Implement Penalty Engine | ✅ DONE | 3 |
+| P0-004 | Add Credit/Debit Note Workflows | ✅ DONE (existed) | 2 |
 
 ### P1 — Should Fix Before Pilot
 | # | Task | Status | Est. Days |
 |---|------|--------|-----------|
-| P1-001 | Implement TCP Sync Layer | PENDING | 5 |
-| P1-002 | Implement Background Workers | PENDING | 3 |
-| P1-003 | Complete Gas Utility | PENDING | 2 |
-| P1-004 | Add Memory Limits to Node Services | PENDING | 0.5 |
-| P1-005 | N+1 Query Prevention Audit | PENDING | 1 |
+| P1-001 | Implement TCP Sync Layer | ✅ DONE | 5 |
+| P1-002 | Implement Background Workers | ✅ DONE | 3 |
+| P1-003 | Complete Gas Utility | ✅ DONE | 2 |
+| P1-004 | Add Memory Limits to Node Services | ✅ DONE | 0.5 |
+| P1-005 | N+1 Query Prevention Audit | ✅ DONE | 1 |
 
 ### P2 — Enterprise Features
 | # | Task | Status | Est. Days |
 |---|------|--------|-----------|
-| P2-001 | Complete Water 01/04 Variants | PENDING | 2 |
-| P2-002 | Add Tariff Versioning + Clone | PENDING | 3 |
-| P2-003 | Add Performance Benchmarks | PENDING | 2 |
-| P2-004 | ESLint Cleanup (49 warnings) | PENDING | 0.5 |
-| P2-005 | Add Loading States to All Pages | PENDING | 2 |
-| P2-006 | Restore Test-Agent CI | PENDING | 1 |
+| P2-001 | Complete Water 01/04 Variants | ✅ DONE | 2 |
+| P2-002 | Add Tariff Versioning + Clone | ✅ DONE | 3 |
+| P2-003 | Add Performance Benchmarks | ✅ DONE | 2 |
+| P2-004 | ESLint Cleanup (49 warnings) | ✅ DONE | 0.5 |
+| P2-005 | Add Loading States to All Pages | ✅ DONE | 2 |
+| P2-006 | Restore Test-Agent CI | ✅ DONE (P1 task) | 1 |
 
 ### P3 — Future
 | # | Task | Est. Days |

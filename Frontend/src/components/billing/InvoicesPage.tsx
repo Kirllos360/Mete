@@ -108,7 +108,7 @@ export default function InvoicesPage() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={(e) => { e.stopPropagation(); navigate('invoice-detail', { id: row.id }); }}><Eye className="h-4 w-4 mr-2" /> View</DropdownMenuItem>
-            <ProtectedAction action="invoice:edit">
+            <ProtectedAction action="invoice:write">
               {row.status === 'draft' && <DropdownMenuItem onClick={(e) => { e.stopPropagation(); handleEditInvoice(row); }}><Pencil className="h-4 w-4 mr-2" /> Edit</DropdownMenuItem>}
             </ProtectedAction>
             <ProtectedAction action="invoice:issue">

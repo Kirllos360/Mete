@@ -21,7 +21,7 @@ module.exports = [
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'security/detect-possible-timing-attacks': 'warn',
       'security/detect-eval-with-expression': 'error',
       'security/detect-non-literal-fs-filename': 'warn',

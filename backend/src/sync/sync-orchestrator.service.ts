@@ -110,12 +110,11 @@ export class SyncOrchestratorService {
     try {
       // 1. Try direct Symbiot SQL first
       const pool = await this.getSymbiotPool(areaCode);
-      // Find project for this area (each area has its own project)
+      // Find project for this area — MUST be linked via areaId (no cross-area fallback)
       const areaRec = await this.prisma.coreArea.findFirst({ where: { areaCode } });
-      const project = areaRec 
-        ? await this.prisma.coreProject.findFirst({ where: { areaId: areaRec.id, isActive: true } })
-        : await this.prisma.coreProject.findFirst({ where: { isActive: true } });
-      if (!project) return { synced: 0, errors: ['No active project for area: ' + areaCode], total: 0 };
+      if (!areaRec) return { synced: 0, errors: ['Area not found: ' + areaCode], total: 0 };
+      const project = await this.prisma.coreProject.findFirst({ where: { areaId: areaRec.id, isActive: true } });
+      if (!project) return { synced: 0, errors: ['No active project for area: ' + areaCode + ' — create project first'], total: 0 };
       const existingSerials = new Set((await this.prisma.meter.findMany({ select: { serialNumber: true } })).map(m => m.serialNumber));
 
       // Query devices with their EAV attributes flattened

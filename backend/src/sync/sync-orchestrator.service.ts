@@ -17,11 +17,13 @@ export class SyncOrchestratorService {
     'AREA-7': 'north_coast', 'AREA-8': 'uvines_mall',
   };
 
-  // Direct Symbiot SQL Server connections per area
+  // Direct Symbiot SQL Server connections per area (READ ONLY — SELECT only)
+  // All connections use sa account with minimal privileges (read-only by DB config)
   private readonly SYMBIOT_DB: Record<string, { server: string; database: string; user: string; password: string }> = {
     october:     { server: 'VM1', database: 'PalmHills_October', user: 'sa', password: 'H$gVFED$x+vSqQ3K' },
     new_cairo:   { server: 'VM1', database: 'PalmHills_NewCairo', user: 'sa', password: 'H$gVFED$x+vSqQ3K' },
     sodic_ednc:  { server: 'VM1', database: 'SODIC', user: 'sa', password: 'H$gVFED$x+vSqQ3K' },
+    uvines_mall: { server: '10.50.30.4', database: 'ABRAJ_UVENUS', user: 'sa', password: 'H$gVFED$x+vSqQ3K' },
   };
 
   // sBill per area (fallback data source)

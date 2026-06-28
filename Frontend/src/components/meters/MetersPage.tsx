@@ -194,7 +194,7 @@ export default function MetersPage() {
             ],
           },
         ]}
-        searchKeys={['serialNumber', 'brand', 'model', 'customerName', 'projectName']}
+        searchable
         searchPlaceholder={t('meters.search')}
         onRowClick={(row) => navigate('meter-detail', { id: row.id })}
       />
@@ -307,3 +307,4 @@ export default function MetersPage() {
     </div>
   );
 }
+

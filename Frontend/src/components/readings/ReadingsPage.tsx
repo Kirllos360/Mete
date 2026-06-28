@@ -174,7 +174,7 @@ export default function ReadingsPage() {
             ],
           },
         ]}
-        searchKeys={['meterSerial', 'customerName', 'unitNumber', 'enteredBy']}
+        searchable
         searchPlaceholder={t('readings.search')}
       />
       </QueryBoundary>
@@ -247,3 +247,4 @@ export default function ReadingsPage() {
     </div>
   );
 }
+

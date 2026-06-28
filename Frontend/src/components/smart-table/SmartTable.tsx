@@ -599,5 +599,4 @@ export default function SmartTable<T extends Record<string, any>>({
   );
 }
 
-// Re-export StatusBadge for convenience
-export { StatusBadge };
+// StatusBadge is already exported above
